@@ -1,0 +1,12 @@
+{
+  "name": "PS Wishlist",
+  "browser_action": {
+    "default_icon": {
+      "16": "images/icons/wishlist-16.png",
+      "24": "images/icons/wishlist-24.png",
+      "32": "images/icons/wishlist-32.png"
+    },
+    "default_title": "PS Wishlist",
+    "default_popup": "popup.html"
+  }
+}
