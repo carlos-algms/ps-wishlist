@@ -18,7 +18,7 @@ const WishlistIcon: FC = () => {
   return (
     <Wrapper>
       <ListAltIconStyled fontSize="large" />
-      <GamepadIconStyled color="primary" stroke="white" stroke-width={2} />
+      <GamepadIconStyled color="primary" stroke="white" strokeWidth={2} />
     </Wrapper>
   );
 };
