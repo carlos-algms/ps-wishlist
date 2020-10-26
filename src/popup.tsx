@@ -1,15 +1,11 @@
-import Typography from '@material-ui/core/Typography';
 import React, { FC } from 'react';
+import Popup from './components/Popup/Popup';
 import appRenderer from './shared/appRenderer';
 
-export const WishlistPage: FC = () => {
-  return (
-    <Typography variant="h1" color="primary">
-      Popup
-    </Typography>
-  );
+export const PopupPage: FC = () => {
+  return <Popup />;
 };
 
-WishlistPage.displayName = 'WishlistPage';
+PopupPage.displayName = 'PopupPage';
 
-appRenderer(WishlistPage);
+appRenderer(PopupPage);
