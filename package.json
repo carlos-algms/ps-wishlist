@@ -5,8 +5,8 @@
   "license": "MIT",
   "repository": "https://github.com/carlos-algms/ps-wishlist",
   "scripts": {
-    "build": "NODE_ENV=production webpack --mode production",
-    "dev": "NODE_ENV=development webpack serve --mode development",
+    "build": "rm -rf dist/ && NODE_ENV=production webpack --mode production",
+    "dev": "rm -rf dist/ && NODE_ENV=development webpack --watch --mode development",
     "serve": "sirv dist --port 8080 --cors --single",
     "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
     "test": "echo NOT implemented"
@@ -19,6 +19,8 @@
     "styled-components": "^5.2.0"
   },
   "devDependencies": {
+    "@types/chrome": "^0.0.125",
+    "@types/copy-webpack-plugin": "^6.0.0",
     "@types/node": "^12",
     "@types/react": "^16.9.53",
     "@types/react-dom": "^16.9.8",
@@ -26,6 +28,7 @@
     "@types/webpack-dev-server": "^3.11.0",
     "@typescript-eslint/eslint-plugin": "^4.5.0",
     "@typescript-eslint/parser": "^4.5.0",
+    "copy-webpack-plugin": "^6.2.1",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.1",
     "eslint-plugin-prettier": "^3.1.2",

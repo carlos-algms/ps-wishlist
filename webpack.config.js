@@ -1,6 +1,7 @@
 // @ts-check
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const createStyledComponentsTransformer = require('typescript-plugin-styled-components').default;
+const CopyPlugin = require('copy-webpack-plugin');
 
 /**
  * @param {WebpackEnvFlags} envFlags
@@ -15,18 +16,29 @@ const webpackFactory = (envFlags, argv) => {
 
   return {
     entry: {
+      background: __dirname + '/src/background.ts',
+      content_script: __dirname + '/src/content_script.ts',
       wishlist: __dirname + '/src/wishlist.tsx',
+      popup: __dirname + '/src/popup.tsx',
     },
     output: {
       path: __dirname + '/dist',
       filename: '[name].js',
     },
-    devtool: 'source-map',
+    devtool: 'inline-source-map',
     plugins: [
       new HtmlWebpackPlugin({
         filename: 'wishlist.html',
         template: __dirname + '/src/template.html',
         chunks: ['wishlist'],
+      }),
+      new HtmlWebpackPlugin({
+        filename: 'popup.html',
+        template: __dirname + '/src/template.html',
+        chunks: ['popup'],
+      }),
+      new CopyPlugin({
+        patterns: [{ from: 'manifest.json' }, { from: 'images/', to: 'images/' }],
       }),
     ],
     resolve: {
