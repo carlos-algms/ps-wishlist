@@ -7,16 +7,19 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
  */
 const webpackFactory = (envFlags) => {
   return {
-    entry: __dirname + '/src/index.tsx',
+    entry: {
+      wishlist: __dirname + '/src/index.tsx',
+    },
     output: {
       path: __dirname + '/dist',
-      filename: 'bundle.js',
+      filename: '[name].js',
     },
     devtool: 'source-map',
     plugins: [
       new HtmlWebpackPlugin({
         filename: 'wishlist.html',
         template: __dirname + '/src/template.html',
+        chunks: ['wishlist'],
       }),
     ],
     module: {
