@@ -1,11 +1,8 @@
-import { FunctionalComponent, h } from 'preact';
+import { FunctionalComponent, h, render } from 'preact';
 
-const App: FunctionalComponent = () => {
-  return (
-    <div id="app">
-      Hi
-    </div>
-  );
+export const App: FunctionalComponent = () => {
+  return <div>Hi</div>;
 };
 
-export default App;
+// @ts-ignore
+render(<App />, document.getElementById('AppRoot'));

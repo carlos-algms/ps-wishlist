@@ -22,7 +22,7 @@
     "removeComments": false,
     "jsx": "react",
     "jsxFactory": "h",
-    "noEmit": true,
+    "skipLibCheck": true
   },
   "include": ["src/**/*.tsx", "src/**/*.ts"],
   "exclude": ["node_modules", ".vscode-test", "build"]
