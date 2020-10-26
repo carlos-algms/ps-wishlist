@@ -1,4 +1,6 @@
 {
+  "editor.formatOnSave": true,
   "npm.packageManager": "yarn",
-  "prettier.packageManager": "yarn"
+  "prettier.packageManager": "yarn",
+  "typescript.tsdk": "node_modules/typescript/lib"
 }

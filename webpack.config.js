@@ -3,12 +3,15 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 /**
  * @param {WebpackEnvFlags} envFlags
+ * @param {Argv} argv
  * @returns {import('webpack').Configuration}
  */
-const webpackFactory = (envFlags) => {
+const webpackFactory = (envFlags, argv) => {
+  const isProduction = argv.mode === 'production';
+
   return {
     entry: {
-      wishlist: __dirname + '/src/index.tsx',
+      wishlist: __dirname + '/src/wishlist.tsx',
     },
     output: {
       path: __dirname + '/dist',
@@ -22,6 +25,9 @@ const webpackFactory = (envFlags) => {
         chunks: ['wishlist'],
       }),
     ],
+    resolve: {
+      extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
+    },
     module: {
       rules: [
         {
@@ -29,6 +35,7 @@ const webpackFactory = (envFlags) => {
           exclude: /(node_modules)/,
           use: {
             loader: 'ts-loader',
+            options: {},
           },
         },
       ],
@@ -53,4 +60,11 @@ module.exports = webpackFactory;
   development?: boolean;
   local?: boolean;
 }} WebpackEnvFlags
+ */
+
+/**
+ * @typedef {{
+ * color: boolean,
+ * mode: 'production' | 'development'
+ * }} Argv
  */
