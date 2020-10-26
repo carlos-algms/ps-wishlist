@@ -1,4 +1,9 @@
-module.exports = {
+// @ts-check
+
+/**
+ * @type {import('eslint').Linter.Config}
+ */
+const options = {
   env: {
     browser: true,
   },
@@ -19,25 +24,38 @@ module.exports = {
     ecmaFeatures: {
       jsx: true,
     },
-    project: './tsconfig.eslint.json',
-  },
-  rules: {
-    'react/no-unknown-property': ['error', { ignore: ['class'] }],
+    project: ['./tsconfig.eslint.json'],
   },
   settings: {
     react: {
-      pragma: 'h',
       version: 'detect',
     },
+  },
+  rules: {
+    'react/no-unknown-property': ['error', { ignore: ['class'] }],
+    'no-restricted-imports': [
+      'error',
+      {
+        paths: ['@material-ui/core'], // Only root imports are blocked
+        patterns: ['@material-ui/*/*/*', '!@material-ui/core/test-utils/*'],
+      },
+    ],
   },
   overrides: [
     {
       files: ['*.js'],
+      env: {
+        browser: true,
+        node: true,
+      },
       rules: {
         '@typescript-eslint/explicit-function-return-type': 'off',
+        '@typescript-eslint/no-var-requires': 'off',
       },
     },
   ],
 
   ignorePatterns: ['node_modules/', 'lib/', 'public/', 'build/', 'dist/'],
 };
+
+module.exports = options;

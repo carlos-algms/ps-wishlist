@@ -1,7 +1,7 @@
 import React, { ComponentType } from 'react';
 import { render } from 'react-dom';
 
-export default function appRenderer(App: ComponentType, rootElementId = 'AppRoot') {
+export default function appRenderer(App: ComponentType, rootElementId = 'AppRoot'): void {
   const appRoot = document.getElementById(rootElementId);
 
   if (appRoot) {

@@ -1,5 +1,6 @@
 // @ts-check
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const createStyledComponentsTransformer = require('typescript-plugin-styled-components').default;
 
 /**
  * @param {WebpackEnvFlags} envFlags
@@ -8,6 +9,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
  */
 const webpackFactory = (envFlags, argv) => {
   const isProduction = argv.mode === 'production';
+  const styledComponentsTransformer = createStyledComponentsTransformer({
+    minify: isProduction,
+  });
 
   return {
     entry: {
@@ -35,7 +39,9 @@ const webpackFactory = (envFlags, argv) => {
           exclude: /(node_modules)/,
           use: {
             loader: 'ts-loader',
-            options: {},
+            options: {
+              getCustomTransformers: () => ({ before: [styledComponentsTransformer] }),
+            },
           },
         },
       ],
