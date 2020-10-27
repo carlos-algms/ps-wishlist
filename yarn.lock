@@ -74,7 +74,7 @@
   resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.12.3.tgz#a305415ebe7a6c7023b40b5122a0662d928334cd"
   integrity sha512-kFsOS0IbsuhO5ojF8Hc8z/8vEIOkylVBrjiZUbLTE3XFe0Qi+uu6HjzQixkFaqr0ZPAMZcBVxEwmsnsLPZ2Xsw==
 
-"@babel/runtime@^7.3.1", "@babel/runtime@^7.4.4", "@babel/runtime@^7.5.5", "@babel/runtime@^7.8.3", "@babel/runtime@^7.8.7":
+"@babel/runtime@^7.10.4", "@babel/runtime@^7.3.1", "@babel/runtime@^7.4.4", "@babel/runtime@^7.5.5", "@babel/runtime@^7.8.3", "@babel/runtime@^7.8.7":
   version "7.12.1"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.12.1.tgz#b4116a6b6711d010b2dad3b7b6e43bf1b9954740"
   integrity sha512-J5AIf3vPj3UwXaAzb5j1xM4WAQDX3EMgemF8rjCP3SoW09LfRKAXQKt6CoVYl230P6iWdRcBbnLDDdnqWxZSCA==
@@ -140,6 +140,13 @@
   version "0.7.5"
   resolved "https://registry.yarnpkg.com/@emotion/unitless/-/unitless-0.7.5.tgz#77211291c1900a700b8a78cfafda3160d76949ed"
   integrity sha512-OWORNpfjMsSSUBVrRBVGECkhWcULOAJz9ZW8uK9qgxD+87M7jHRcvh/A96XXNhXTLmKcoYSQtBEX7lHMO7YRwg==
+
+"@fluentui/react-context-selector@^0.51.2":
+  version "0.51.2"
+  resolved "https://registry.yarnpkg.com/@fluentui/react-context-selector/-/react-context-selector-0.51.2.tgz#7ab5646b3cc9d4aa6b51b3c91e8f472482b7bef3"
+  integrity sha512-ciwU9590NgR3NaGv6pGj8QQONOmY/UVxfg9p6uhYqvk7jVlxLlAbt+2tYrferbbzDqIM/WqQRtRET9XwdPdEIQ==
+  dependencies:
+    "@babel/runtime" "^7.10.4"
 
 "@material-ui/core@^4.11.0":
   version "4.11.0"
@@ -5150,6 +5157,11 @@ url@^0.11.0:
   dependencies:
     punycode "1.3.2"
     querystring "0.2.0"
+
+use-async-effect@^2.2.2:
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/use-async-effect/-/use-async-effect-2.2.2.tgz#a937b6d71e7623406bb85a4d3434be2ced9087b6"
+  integrity sha512-zFas5h1jm4FNCk+txUzfMUAQhIFJGdrhAmg2lSA+Q6BZKYFen/yZlHEx5RGWSUV1USjLFZ+yg989fFyzJHW3Zw==
 
 use@^3.1.0:
   version "3.1.1"

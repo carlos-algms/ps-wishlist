@@ -10,7 +10,11 @@ const Root = styled.main`
   padding: 0px 20px 20px;
 `;
 
-const Popup: FC = () => {
+export type Props = {
+  isProductPage: boolean;
+};
+
+const Popup: FC<Props> = ({ isProductPage }) => {
   return (
     <Root>
       <BottomNavigation showLabels>
@@ -22,6 +26,8 @@ const Popup: FC = () => {
         />
       </BottomNavigation>
       <Divider />
+
+      {isProductPage && <h1>Is Product Page</h1>}
     </Root>
   );
 };

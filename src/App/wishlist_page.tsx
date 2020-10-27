@@ -1,7 +1,8 @@
 import Typography from '@material-ui/core/Typography';
 import React, { FC } from 'react';
 import styled from 'styled-components';
-import appRenderer from './shared/appRenderer';
+import Providers from '../contexts/Providers';
+import appRenderer from '../shared/appRenderer';
 
 const Colored = styled.div`
   color: red;
@@ -9,9 +10,11 @@ const Colored = styled.div`
 
 export const WishlistPage: FC = () => {
   return (
-    <Typography variant="h1">
-      <Colored>Hi from MyApp</Colored>
-    </Typography>
+    <Providers>
+      <Typography variant="h1">
+        <Colored>Hi from MyApp</Colored>
+      </Typography>
+    </Providers>
   );
 };
 

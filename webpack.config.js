@@ -16,10 +16,10 @@ const webpackFactory = (envFlags, argv) => {
 
   return {
     entry: {
-      background: __dirname + '/src/background.ts',
-      content_script: __dirname + '/src/content_script.ts',
-      wishlist: __dirname + '/src/wishlist.tsx',
-      popup: __dirname + '/src/popup.tsx',
+      background: __dirname + '/src/App/background.ts',
+      content_script: __dirname + '/src/App/content_script.ts',
+      wishlist: __dirname + '/src/App/wishlist_page.tsx',
+      popup: __dirname + '/src/App/popup_page.tsx',
     },
     output: {
       path: __dirname + '/dist',

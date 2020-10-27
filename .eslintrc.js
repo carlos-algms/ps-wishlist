@@ -10,11 +10,11 @@ const options = {
   plugins: ['@typescript-eslint'],
   extends: [
     'eslint:recommended',
+    'plugin:react/recommended',
+    'plugin:react-hooks/recommended',
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:@typescript-eslint/recommended-requiring-type-checking',
-    'plugin:react/recommended',
-    'plugin:react-hooks/recommended',
     'plugin:prettier/recommended',
     'prettier/@typescript-eslint',
     'prettier/react',
@@ -40,6 +40,7 @@ const options = {
         patterns: ['@material-ui/*/*/*', '!@material-ui/core/test-utils/*'],
       },
     ],
+    'react/prop-types': 'off',
   },
   overrides: [
     {
