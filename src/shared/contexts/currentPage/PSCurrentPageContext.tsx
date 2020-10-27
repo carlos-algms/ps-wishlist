@@ -1,7 +1,7 @@
 import { createContext } from '@fluentui/react-context-selector';
 import React, { FC } from 'react';
-import getIsProductUrl from '../../shared/getIsProductUrl';
-import useCurrentUrl from '../../shared/hooks/useCurrentUrl';
+import getIsProductUrl from '../../../Product/getIsProductUrl';
+import useCurrentUrl from '../../hooks/useCurrentUrl';
 import makeContextSelector from '../makeContextSelector';
 
 export type PSCurrentPageContextValue = {

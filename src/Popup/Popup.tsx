@@ -3,8 +3,8 @@ import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import Divider from '@material-ui/core/Divider';
 import React, { FC } from 'react';
 import styled from 'styled-components';
-import openWishlistPage from '../../shared/openWishlistPage';
-import WishlistIcon from '../Icons/WishlistIcon';
+import openWishlistPage from '../shared/openWishlistPage';
+import WishlistIcon from '../shared/components/Icons/WishlistIcon';
 
 const Root = styled.main`
   padding: 0px 20px 20px;

@@ -1,9 +1,9 @@
-import React, { memo } from 'react';
-import { usePsCurrentPageSelectors } from '../../contexts/currentPage/PSCurrentPageContext';
+import React, { FC } from 'react';
+import { usePsCurrentPageSelectors } from '../shared/contexts/currentPage/PSCurrentPageContext';
 import {
   selectCurrentPageUrl,
   selectIsProductPage,
-} from '../../contexts/currentPage/psCurrentPageSelectors';
+} from '../shared/contexts/currentPage/psCurrentPageSelectors';
 import Popup from './Popup';
 
 const selectors = {
@@ -11,14 +11,12 @@ const selectors = {
   isProductPage: selectIsProductPage,
 };
 
-const PopupConnector = memo(() => {
+const PopupConnector: FC = () => {
   const { currentUrl, isProductPage } = usePsCurrentPageSelectors(selectors);
 
   console.log(currentUrl, isProductPage);
 
   return <Popup isProductPage={isProductPage} />;
-});
-
-PopupConnector.displayName = 'PopupConnector';
+};
 
 export default PopupConnector;

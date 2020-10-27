@@ -1,4 +1,4 @@
-import getProductSchema from './getProductSchema';
+import getProductSchema from '../Product/getProductSchema';
 
 export default async function includeToWishlist(): Promise<void> {
   const schema = await getProductSchema();

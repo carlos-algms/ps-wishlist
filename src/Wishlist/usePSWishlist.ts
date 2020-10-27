@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 import useAsyncEffect from 'use-async-effect';
-import { ProductSchema } from '../../shared/getProductSchema';
+import { ProductSchema } from '../Product/ProductTypes';
 import {
   getWishlistFromStorage,
   includeProductToWishListStorage,

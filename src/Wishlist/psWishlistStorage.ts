@@ -1,4 +1,4 @@
-import { ProductSchema } from '../../shared/getProductSchema';
+import { ProductSchema } from '../Product/ProductTypes';
 
 export type WishlistItem = ProductSchema & {
   includedAt: number;

@@ -1,23 +1,16 @@
-import Typography from '@material-ui/core/Typography';
 import React, { FC } from 'react';
-import styled from 'styled-components';
-import Providers from '../contexts/Providers';
 import appRenderer from '../shared/appRenderer';
+import Providers from '../shared/contexts/Providers';
+import WishlistPage from '../Wishlist/WishlistPage';
 
-const Colored = styled.div`
-  color: red;
-`;
-
-export const WishlistPage: FC = () => {
+export const WishlistEntryPoint: FC = () => {
   return (
     <Providers>
-      <Typography variant="h1">
-        <Colored>Hi from MyApp</Colored>
-      </Typography>
+      <WishlistPage />
     </Providers>
   );
 };
 
-WishlistPage.displayName = 'WishlistPage';
+WishlistEntryPoint.displayName = 'WishlistEntryPoint';
 
-appRenderer(WishlistPage);
+appRenderer(WishlistEntryPoint);
