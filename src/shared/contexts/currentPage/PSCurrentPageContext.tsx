@@ -2,7 +2,7 @@ import { createContext } from '@fluentui/react-context-selector';
 import React, { FC } from 'react';
 import getIsProductUrl from '../../../Product/getIsProductUrl';
 import useCurrentUrl from '../../hooks/useCurrentUrl';
-import makeContextSelector from '../makeContextSelector';
+import makeContextSelectorHook from '../makeContextSelector';
 
 export type PSCurrentPageContextValue = {
   error?: Error | null;
@@ -20,7 +20,7 @@ const defaultValue: PSCurrentPageContextValue = {
  */
 export const PSCurrentPageContext = createContext<PSCurrentPageContextValue>(defaultValue);
 
-export const usePsCurrentPageSelectors = makeContextSelector(PSCurrentPageContext);
+export const usePsCurrentPageSelectors = makeContextSelectorHook(PSCurrentPageContext);
 
 export const PSCurrentPageContextProvider: FC = ({ children }) => {
   const currentUrl = useCurrentUrl();
