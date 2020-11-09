@@ -1,3 +1,4 @@
+import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
@@ -26,23 +27,44 @@ const StyledAvatar = styled(Avatar)`
   margin-right: ${({ theme }) => theme.spacing(1)}px;
 `;
 
+// https://github.com/mui-org/material-ui/issues/10285
+const useStyles = makeStyles({
+  listItem: {
+    '&:hover $listItemSecondaryAction': {
+      visibility: 'inherit',
+    },
+  },
+  listItemSecondaryAction: {
+    visibility: 'hidden',
+  },
+});
+
 const WishlistListItem: FC<Props> = ({ item }) => {
   const { removeProduct } = usePsWishlistSelectors({
     removeProduct: (c) => c.removeProduct,
   });
-  const { name, image, discountPrice, currencyCode, sku } = item;
+  const { name, image, discountPrice, currencyCode, sku, productUrl } = item;
 
+  const classes = useStyles();
   return (
     <>
-      <ListItem alignItems="flex-start" button>
+      <ListItem
+        alignItems="flex-start"
+        button
+        classes={{
+          container: classes.listItem,
+        }}
+      >
         <ListItemAvatar>
           <StyledAvatar alt={name} src={`${image}?w=${AVATAR_SIZE}`} variant="rounded" />
         </ListItemAvatar>
         <ListItemText primary={name} secondary={formatCurrency(discountPrice, currencyCode)} />
-        <ListItemSecondaryAction>
+        <ListItemSecondaryAction className={classes.listItemSecondaryAction}>
           <IconButton
             aria-label="open in new window"
             title="Visit the product page at PlayStation store"
+            href={productUrl}
+            target="_blank"
           >
             <OpenInNewIcon />
           </IconButton>
