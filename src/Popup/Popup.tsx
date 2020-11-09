@@ -3,8 +3,10 @@ import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import Divider from '@material-ui/core/Divider';
 import React, { FC } from 'react';
 import styled from 'styled-components';
-import openWishlistPage from '../shared/openWishlistPage';
+
+import { ProductSchema } from '../Product/ProductTypes';
 import WishlistIcon from '../shared/components/Icons/WishlistIcon';
+import openWishlistPage from '../shared/openWishlistPage';
 
 const Root = styled.main`
   padding: 0px 20px 20px;
@@ -12,9 +14,11 @@ const Root = styled.main`
 
 export type Props = {
   isProductPage: boolean;
+  product: ProductSchema | null;
 };
 
-const Popup: FC<Props> = ({ isProductPage }) => {
+const Popup: FC<Props> = ({ isProductPage, product }) => {
+  console.log(product);
   return (
     <Root>
       <BottomNavigation showLabels>
@@ -27,7 +31,7 @@ const Popup: FC<Props> = ({ isProductPage }) => {
       </BottomNavigation>
       <Divider />
 
-      {isProductPage && <h1>Is Product Page</h1>}
+      {isProductPage && <h1>Show Product Card</h1>}
     </Root>
   );
 };

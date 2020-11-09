@@ -1,17 +1,17 @@
 import { useCallback, useState } from 'react';
 import useAsyncEffect from 'use-async-effect';
-import { ProductSchema } from '../Product/ProductTypes';
+import { ProductSchema } from '../../Product/ProductTypes';
 import {
   getWishlistFromStorage,
   includeProductToWishListStorage,
   WishlistItem,
-} from './psWishlistStorage';
+} from '../psWishlistStorage';
 
 export type UsePSWishListValue = {
   isLoading: boolean;
   wishList: WishlistItem[];
-  includeProduct(product: ProductSchema): any;
-  removeProduct(product: ProductSchema): any;
+  includeProduct: (product: ProductSchema) => any;
+  removeProduct: (product: ProductSchema) => any;
 };
 
 export default function usePSWishlist(): UsePSWishListValue {
@@ -22,7 +22,7 @@ export default function usePSWishlist(): UsePSWishListValue {
   const includeProduct = useCallback(
     async (product: ProductSchema) => {
       const newList = await includeProductToWishListStorage(product);
-      if (!isMounted) {
+      if (isMounted) {
         setWishlist(newList);
       }
     },

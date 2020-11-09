@@ -1,18 +1,28 @@
 import { useEffect } from 'react';
-import getIsProductUrl from '../Product/getIsProductUrl';
-import includeToWishlist from './includeToWishlist';
-import useCurrentUrl from '../shared/hooks/useCurrentUrl';
+
+import { usePsCurrentPageSelectors } from '../shared/contexts/currentPage/PSCurrentPageContext';
+import {
+  selectIsProductPage,
+  selectProductSchema,
+} from '../shared/contexts/currentPage/psCurrentPageSelectors';
+
+import { usePsWishlistSelectors } from './PSWishlistContext/PSWishlistContext';
 
 export default function useIncludeToWishlist(): void {
-  const currentUrl = useCurrentUrl();
+  const { productSchema } = usePsCurrentPageSelectors({
+    isProductPage: selectIsProductPage,
+    productSchema: selectProductSchema,
+  });
+
+  const { includeProduct } = usePsWishlistSelectors({
+    includeProduct: (c) => c.includeProduct,
+  });
 
   useEffect(() => {
-    const isProductUrl = getIsProductUrl(currentUrl);
-
-    if (!isProductUrl) {
+    if (!productSchema) {
       return;
     }
 
-    void includeToWishlist();
-  }, [currentUrl]);
+    includeProduct(productSchema);
+  }, [includeProduct, productSchema]);
 }

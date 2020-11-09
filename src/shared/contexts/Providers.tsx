@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { PSCurrentPageContextProvider } from './currentPage/PSCurrentPageContext';
-import { PSWishlistContextProvider } from '../../Wishlist/PSWishlistContext';
+import { PSWishlistContextProvider } from '../../Wishlist/PSWishlistContext/PSWishlistContext';
 
 /**
  * Wrap the main App providers

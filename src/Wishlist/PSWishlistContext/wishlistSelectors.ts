@@ -1,5 +1,5 @@
 import { PSWishlistContextValue } from './PSWishlistContext';
-import { WishlistItem } from './psWishlistStorage';
+import { WishlistItem } from '../psWishlistStorage';
 
 export const selectWishlist = (context: PSWishlistContextValue): WishlistItem[] => context.wishList;
 

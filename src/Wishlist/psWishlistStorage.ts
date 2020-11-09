@@ -34,11 +34,18 @@ export function productToWishListItem(product: ProductSchema): WishlistItem {
 export async function includeProductToWishListStorage(
   product: ProductSchema,
 ): Promise<WishlistItem[]> {
-  const item = productToWishListItem(product);
+  const newItem = productToWishListItem(product);
+  const wishlist = await getWishlistFromStorage();
 
-  const wishList = await getWishlistFromStorage();
-  const updatedWishlist = [...wishList, item];
+  if (!isAlreadyIncluded(newItem, wishlist)) {
+    const updatedWishlist = [...wishlist, newItem];
 
-  await saveWishlistToStorage(updatedWishlist);
-  return updatedWishlist;
+    await saveWishlistToStorage(updatedWishlist);
+    return updatedWishlist;
+  }
+
+  return wishlist;
 }
+
+const isAlreadyIncluded = (newItem: WishlistItem, wishlist: WishlistItem[]) =>
+  wishlist.every((item) => item.sku !== newItem.sku);
