@@ -10,6 +10,7 @@ import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import React, { FC } from 'react';
 import styled from 'styled-components';
 
+import { formatCurrency } from '../../shared/formatCurrency';
 import { WishlistItem } from '../psWishlistStorage';
 
 type Props = {
@@ -28,7 +29,7 @@ const WishlistListItem: FC<Props> = ({ item }) => {
   const {
     name,
     image,
-    offers: { price },
+    offers: { price, priceCurrency },
   } = item;
 
   return (
@@ -37,7 +38,7 @@ const WishlistListItem: FC<Props> = ({ item }) => {
         <ListItemAvatar>
           <StyledAvatar alt={name} src={`${image}?w=${AVATAR_SIZE}`} variant="rounded" />
         </ListItemAvatar>
-        <ListItemText primary={name} secondary={price} />
+        <ListItemText primary={name} secondary={formatCurrency(price, priceCurrency)} />
         <ListItemSecondaryAction>
           <IconButton
             aria-label="open in new window"
