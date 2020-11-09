@@ -26,11 +26,7 @@ const StyledAvatar = styled(Avatar)`
 `;
 
 const WishlistListItem: FC<Props> = ({ item }) => {
-  const {
-    name,
-    image,
-    offers: { price, priceCurrency },
-  } = item;
+  const { name, image, discountPrice, currencyCode } = item;
 
   return (
     <>
@@ -38,7 +34,7 @@ const WishlistListItem: FC<Props> = ({ item }) => {
         <ListItemAvatar>
           <StyledAvatar alt={name} src={`${image}?w=${AVATAR_SIZE}`} variant="rounded" />
         </ListItemAvatar>
-        <ListItemText primary={name} secondary={formatCurrency(price, priceCurrency)} />
+        <ListItemText primary={name} secondary={formatCurrency(discountPrice, currencyCode)} />
         <ListItemSecondaryAction>
           <IconButton
             aria-label="open in new window"
