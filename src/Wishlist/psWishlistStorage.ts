@@ -48,4 +48,4 @@ export async function includeProductToWishListStorage(
 }
 
 const isAlreadyIncluded = (newItem: WishlistItem, wishlist: WishlistItem[]) =>
-  wishlist.every((item) => item.sku !== newItem.sku);
+  wishlist.some((item) => item.sku === newItem.sku);

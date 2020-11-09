@@ -1,6 +1,6 @@
 export type Offer = {
   price: number;
-  current: string;
+  priceCurrency: string;
 };
 
 export type ProductSchema = {
