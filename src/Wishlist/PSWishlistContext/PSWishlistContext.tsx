@@ -9,7 +9,7 @@ export type PSWishlistContextValue = UsePSWishListValue;
 
 const defaultValue: PSWishlistContextValue = {
   isLoading: false,
-  wishList: [],
+  wishlist: [],
   includeProduct() {
     /* noop */
   },

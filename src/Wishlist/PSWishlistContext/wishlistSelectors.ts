@@ -1,8 +1,8 @@
 import { PSWishlistContextValue } from './PSWishlistContext';
 import { WishlistItem } from '../psWishlistStorage';
 
-export const selectWishlist = (context: PSWishlistContextValue): WishlistItem[] => context.wishList;
+export const selectWishlist = (context: PSWishlistContextValue): WishlistItem[] => context.wishlist;
 
 export const selectWishlistItem = (sku: string) => (
   context: PSWishlistContextValue,
-): WishlistItem | undefined => context.wishList.find((item) => item.sku === sku);
+): WishlistItem | undefined => context.wishlist.find((item) => item.sku === sku);

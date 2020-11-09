@@ -32,7 +32,7 @@ export const PSCurrentPageContextProvider: FC = ({ children }) => {
   const isProductPage = getIsProductUrl(currentUrl);
   const productSchema = useProductSchema(isProductPage, currentUrl);
 
-  if (!currentUrl) {
+  if (!currentUrl || (isProductPage && !productSchema)) {
     return null;
   }
 
