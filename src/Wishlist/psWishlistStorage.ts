@@ -47,5 +47,12 @@ export async function includeProductToWishListStorage(
   return wishlist;
 }
 
+export async function removeProductFromWishListStorage(sku: string): Promise<WishlistItem[]> {
+  const wishlist = await getWishlistFromStorage();
+  const updatedList = wishlist.filter((item) => item.sku !== sku);
+  await saveWishlistToStorage(updatedList);
+  return updatedList;
+}
+
 const isAlreadyIncluded = (newItem: WishlistItem, wishlist: WishlistItem[]) =>
   wishlist.some((item) => item.sku === newItem.sku);

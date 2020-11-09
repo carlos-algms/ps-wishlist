@@ -2,7 +2,7 @@ import executeScriptOnCurrentTab from '../shared/executeScriptOnCurrentTab';
 import { CTASchema, GameCTASchema, ProductSchema, PSProductSchema } from './ProductTypes';
 
 const PRODUCT_SELECTOR = '#mfe-jsonld-tags';
-const CTA_SELECTOR = `.cta-title-container .pdp-cta.pdp-visible script`;
+const CTA_SELECTOR = `.cta-title-container .pdp-cta script`;
 
 /**
  * Query the PSN page for script elements and parses its json content to extract usable data

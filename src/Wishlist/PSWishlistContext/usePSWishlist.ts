@@ -6,14 +6,15 @@ import useMergeableState from '../../shared/hooks/useMergeableState';
 import {
   getWishlistFromStorage,
   includeProductToWishListStorage,
+  removeProductFromWishListStorage,
   WishlistItem,
 } from '../psWishlistStorage';
 
 export type UsePSWishListValue = {
   isLoading: boolean;
   wishlist: WishlistItem[];
-  includeProduct: (product: ProductSchema) => any;
-  removeProduct: (product: ProductSchema) => any;
+  includeProduct: (product: ProductSchema) => unknown;
+  removeProduct: (sku: string) => unknown;
 };
 
 type State = {
@@ -32,14 +33,15 @@ export default function usePSWishlist(): UsePSWishListValue {
   const includeProduct = useCallback(
     async (product: ProductSchema) => {
       const newList = await includeProductToWishListStorage(product);
+      // TODO instead of updating the state here, subscribe to https://developer.chrome.com/extensions/storage#event-onChanged
       mergeState({ wishlist: newList });
     },
     [mergeState],
   );
 
   const removeProduct = useCallback(
-    async (product: ProductSchema) => {
-      const newList = await includeProductToWishListStorage(product);
+    async (sku: string) => {
+      const newList = await removeProductFromWishListStorage(sku);
       mergeState({ wishlist: newList });
     },
     [mergeState],

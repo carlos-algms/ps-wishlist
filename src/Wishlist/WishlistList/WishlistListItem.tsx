@@ -11,6 +11,7 @@ import React, { FC } from 'react';
 import styled from 'styled-components';
 
 import { formatCurrency } from '../../shared/formatCurrency';
+import { usePsWishlistSelectors } from '../PSWishlistContext/PSWishlistContext';
 import { WishlistItem } from '../psWishlistStorage';
 
 type Props = {
@@ -26,7 +27,10 @@ const StyledAvatar = styled(Avatar)`
 `;
 
 const WishlistListItem: FC<Props> = ({ item }) => {
-  const { name, image, discountPrice, currencyCode } = item;
+  const { removeProduct } = usePsWishlistSelectors({
+    removeProduct: (c) => c.removeProduct,
+  });
+  const { name, image, discountPrice, currencyCode, sku } = item;
 
   return (
     <>
@@ -42,7 +46,11 @@ const WishlistListItem: FC<Props> = ({ item }) => {
           >
             <OpenInNewIcon />
           </IconButton>
-          <IconButton aria-label="delete" title="Remove this item from your wish list">
+          <IconButton
+            aria-label="delete"
+            title="Remove this item from your wish list"
+            onClick={() => removeProduct(sku)}
+          >
             <DeleteIcon />
           </IconButton>
         </ListItemSecondaryAction>

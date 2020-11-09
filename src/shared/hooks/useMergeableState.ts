@@ -1,4 +1,3 @@
-import merge from 'lodash-es/merge';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 export default function useMergeableState<S>(
@@ -19,8 +18,7 @@ export default function useMergeableState<S>(
         setState((currentState: S) => {
           const newState =
             typeof partialState === 'function' ? partialState(currentState) : partialState;
-          const merged = merge({}, currentState, newState);
-          return merged;
+          return { ...currentState, ...newState };
         });
       }
     },
