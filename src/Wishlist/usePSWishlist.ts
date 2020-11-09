@@ -16,7 +16,7 @@ export type UsePSWishListValue = {
 
 export default function usePSWishlist(): UsePSWishListValue {
   const [isLoading, setIsLoading] = useState(true);
-  const [isMounted, setIsMounted] = useState(false);
+  const [isMounted, setIsMounted] = useState(true);
   const [wishList, setWishlist] = useState<WishlistItem[]>([]);
 
   const includeProduct = useCallback(
@@ -32,7 +32,7 @@ export default function usePSWishlist(): UsePSWishListValue {
   const removeProduct = useCallback(
     async (product: ProductSchema) => {
       const newList = await includeProductToWishListStorage(product);
-      if (!isMounted) {
+      if (isMounted) {
         setWishlist(newList);
       }
     },

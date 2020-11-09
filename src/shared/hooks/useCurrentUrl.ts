@@ -5,7 +5,10 @@ export default function useCurrentUrl(): string {
   const [url, setUrl] = useState('');
 
   useEffect(() => {
-    getCurrentUrl().then(setUrl, () => setUrl(''));
+    getCurrentUrl().then(setUrl, (e) => {
+      console.error(e);
+      throw new Error('Error fetching the current url');
+    });
   }, []);
 
   return url;
