@@ -81,4 +81,5 @@ export type ProductSchema = Omit<PSProductSchema, 'offers'> & {
   originalPrice: number;
   discountPrice: number;
   currencyCode: string;
+  productUrl: string;
 };

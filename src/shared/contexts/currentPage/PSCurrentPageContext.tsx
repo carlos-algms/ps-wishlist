@@ -30,7 +30,7 @@ export const usePsCurrentPageSelectors = makeContextSelectorHook(PSCurrentPageCo
 export const PSCurrentPageContextProvider: FC = ({ children }) => {
   const currentUrl = useCurrentUrl();
   const isProductPage = getIsProductUrl(currentUrl);
-  const productSchema = useProductSchema(isProductPage);
+  const productSchema = useProductSchema(isProductPage, currentUrl);
 
   if (!currentUrl) {
     return null;

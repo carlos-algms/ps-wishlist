@@ -7,7 +7,7 @@ const CTA_SELECTOR = `.cta-title-container .pdp-cta.pdp-visible script`;
 /**
  * Query the PSN page for script elements and parses its json content to extract usable data
  */
-export default async function getProductSchema(): Promise<null | ProductSchema> {
+export default async function getProductSchema(productUrl: string): Promise<null | ProductSchema> {
   const [psProductSchema, ctaSchema] = await Promise.all([
     getJson<PSProductSchema>(PRODUCT_SELECTOR),
     getJson<CTASchema>(CTA_SELECTOR),
@@ -26,6 +26,7 @@ export default async function getProductSchema(): Promise<null | ProductSchema> 
     originalPrice: psProductSchema.offers.price,
     discountPrice: psProductSchema.offers.price,
     currencyCode: psProductSchema.offers.priceCurrency,
+    productUrl,
   };
 
   const gameCtaSchema = getGameCtaSchema(ctaSchema);
