@@ -17,7 +17,6 @@ const webpackFactory = (envFlags, argv) => {
   return {
     entry: {
       background: __dirname + '/src/App/background.ts',
-      content_script: __dirname + '/src/App/content_script.ts',
       wishlist: __dirname + '/src/App/wishlist_page.tsx',
       popup: __dirname + '/src/App/popup_page.tsx',
     },
@@ -28,11 +27,13 @@ const webpackFactory = (envFlags, argv) => {
     devtool: 'inline-source-map',
     plugins: [
       new HtmlWebpackPlugin({
+        title: 'Wishlist Page',
         filename: 'wishlist.html',
         template: __dirname + '/src/template.html',
         chunks: ['wishlist'],
       }),
       new HtmlWebpackPlugin({
+        title: 'Popup',
         filename: 'popup.html',
         template: __dirname + '/src/template.html',
         chunks: ['popup'],
@@ -74,10 +75,10 @@ module.exports = webpackFactory;
 
 /**
  * @typedef {{
-  production?: boolean;
-  development?: boolean;
-  local?: boolean;
-}} WebpackEnvFlags
+ * production?: boolean;
+ * development?: boolean;
+ * local?: boolean;
+ * }} WebpackEnvFlags
  */
 
 /**

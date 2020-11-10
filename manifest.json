@@ -17,12 +17,6 @@
     "default_title": "PS Wishlist",
     "default_popup": "popup.html"
   },
-  "content_scripts": [
-    {
-      "js": ["content_script.js"],
-      "matches": ["*://store.playstation.com/*"]
-    }
-  ],
   "background": {
     "scripts": ["background.js"],
     "persistent": false
