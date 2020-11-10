@@ -1,21 +1,23 @@
 import { createContext } from '@fluentui/react-context-selector';
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
+import useAsyncEffect from 'use-async-effect';
 
 import makeContextSelectorHook from '../../shared/contexts/makeContextSelector';
+import useMergeableState from '../../shared/hooks/useMergeableState';
+import {
+  getWishlistFromStorage,
+  WishlistItem,
+  wishlistStorageOnChanges,
+} from '../psWishlistStorage';
 
-import usePSWishlist, { UsePSWishListValue } from './usePSWishlist';
-
-export type PSWishlistContextValue = UsePSWishListValue;
+export type PSWishlistContextValue = {
+  isLoading: boolean;
+  wishlist: WishlistItem[];
+};
 
 const defaultValue: PSWishlistContextValue = {
-  isLoading: false,
+  isLoading: true,
   wishlist: [],
-  includeProduct() {
-    /* noop */
-  },
-  removeProduct() {
-    /* noop */
-  },
 };
 
 /**
@@ -26,11 +28,27 @@ export const PSWishlistContext = createContext<PSWishlistContextValue>(defaultVa
 export const usePsWishlistSelectors = makeContextSelectorHook(PSWishlistContext);
 
 export const PSWishlistContextProvider: FC = ({ children }) => {
-  const contextValue = usePSWishlist();
+  const [state, mergeState] = useMergeableState(defaultValue);
 
-  if (contextValue.isLoading) {
+  useEffect(() => {
+    return wishlistStorageOnChanges((changes) => {
+      mergeState({ wishlist: changes.newValue });
+    });
+  }, [mergeState]);
+
+  useAsyncEffect(async (checkIsMounted) => {
+    const wishlistFromStorage = await getWishlistFromStorage();
+    if (checkIsMounted()) {
+      mergeState({
+        wishlist: wishlistFromStorage,
+        isLoading: false,
+      });
+    }
+  }, []);
+
+  if (state.isLoading) {
     return null;
   }
 
-  return <PSWishlistContext.Provider value={contextValue}>{children}</PSWishlistContext.Provider>;
+  return <PSWishlistContext.Provider value={state}>{children}</PSWishlistContext.Provider>;
 };

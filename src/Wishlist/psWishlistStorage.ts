@@ -6,6 +6,43 @@ export type WishlistItem = ProductSchema & {
 
 const KEY = 'wishlistStore';
 
+export interface WishlistStorageChange {
+  newValue: WishlistItem[];
+  oldValue?: WishlistItem[];
+}
+
+/**
+ * Listen for changes from the browser's storage API
+ * Only emits when it is the Wishlist storage
+ * @see https://developer.chrome.com/extensions/storage#event-onChanged
+ */
+export const wishlistStorageOnChanges = (
+  cb: (changes: WishlistStorageChange, namespace: string) => unknown,
+): (() => void) => {
+  const listener: (
+    changes: Record<string, Partial<WishlistStorageChange>>,
+    areaName: chrome.storage.AreaName,
+  ) => void = (changes, namespace) => {
+    const store = changes[KEY];
+
+    if (store) {
+      cb(
+        {
+          newValue: store.newValue ?? [],
+          oldValue: store.oldValue,
+        },
+        namespace,
+      );
+    }
+  };
+
+  chrome.storage.onChanged.addListener(listener);
+
+  return function removeListener() {
+    chrome.storage.onChanged.removeListener(listener);
+  };
+};
+
 export function getWishlistFromStorage(): Promise<WishlistItem[]> {
   return new Promise((resolve) => {
     chrome.storage.sync.get(KEY, (result) => {
@@ -22,6 +59,9 @@ export function saveWishlistToStorage(newWishlist: WishlistItem[]): Promise<bool
   });
 }
 
+/**
+ * Converts a Product from PSN to normalized ProductSchema used by the App
+ */
 export function productToWishListItem(product: ProductSchema): WishlistItem {
   const item: WishlistItem = {
     ...product,
@@ -31,9 +71,10 @@ export function productToWishListItem(product: ProductSchema): WishlistItem {
   return item;
 }
 
-export async function includeProductToWishListStorage(
-  product: ProductSchema,
-): Promise<WishlistItem[]> {
+/**
+ * @returns true when inserted, false when already included
+ */
+export async function includeProductToWishListStorage(product: ProductSchema): Promise<boolean> {
   const newItem = productToWishListItem(product);
   const wishlist = await getWishlistFromStorage();
 
@@ -41,17 +82,21 @@ export async function includeProductToWishListStorage(
     const updatedWishlist = [...wishlist, newItem];
 
     await saveWishlistToStorage(updatedWishlist);
-    return updatedWishlist;
+    return true;
   }
 
-  return wishlist;
+  return false;
 }
 
-export async function removeProductFromWishListStorage(sku: string): Promise<WishlistItem[]> {
+/**
+ * @returns true when removed, false if sku not found
+ */
+export async function removeProductFromWishListStorage(sku: string): Promise<boolean> {
   const wishlist = await getWishlistFromStorage();
   const updatedList = wishlist.filter((item) => item.sku !== sku);
   await saveWishlistToStorage(updatedList);
-  return updatedList;
+
+  return wishlist.length !== updatedList.length;
 }
 
 const isAlreadyIncluded = (newItem: WishlistItem, wishlist: WishlistItem[]) =>
