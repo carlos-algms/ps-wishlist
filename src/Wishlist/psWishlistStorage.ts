@@ -60,7 +60,7 @@ export function saveWishlistToStorage(newWishlist: WishlistItem[]): Promise<bool
 }
 
 /**
- * Converts a Product from PSN to normalized ProductSchema used by the App
+ * Converts a Product from PSN to normalized WishlistItem used by the App
  */
 export function productToWishListItem(product: ProductSchema): WishlistItem {
   const item: WishlistItem = {

@@ -46,9 +46,5 @@ export const PSWishlistContextProvider: FC = ({ children }) => {
     }
   }, []);
 
-  if (state.isLoading) {
-    return null;
-  }
-
   return <PSWishlistContext.Provider value={state}>{children}</PSWishlistContext.Provider>;
 };

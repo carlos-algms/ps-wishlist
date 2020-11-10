@@ -13,25 +13,23 @@ const Root = styled.main`
 `;
 
 export type Props = {
-  isProductPage: boolean;
-  product: ProductSchema | null;
+  productSchema: ProductSchema | null;
 };
 
-const Popup: FC<Props> = ({ isProductPage, product }) => {
-  console.log(product);
+const Popup: FC<Props> = ({ productSchema }) => {
   return (
     <Root>
       <BottomNavigation showLabels>
         <BottomNavigationAction
           label="Wishlist"
-          title="Show my wishlist"
+          title="Show my Wishlist"
           icon={<WishlistIcon />}
           onClick={openWishlistPage}
         />
       </BottomNavigation>
       <Divider />
 
-      {isProductPage && <h1>Show Product Card</h1>}
+      {productSchema && <h1>Show Product Card</h1>}
     </Root>
   );
 };

@@ -1,21 +1,17 @@
 import React, { FC, useEffect } from 'react';
 
 import { usePsCurrentPageSelectors } from '../shared/contexts/currentPage/PSCurrentPageContext';
-import {
-  selectIsProductPage,
-  selectProductSchema,
-} from '../shared/contexts/currentPage/psCurrentPageSelectors';
+import { selectProductSchema } from '../shared/contexts/currentPage/psCurrentPageSelectors';
 import { includeProductToWishListStorage } from '../Wishlist/psWishlistStorage';
 
 import Popup from './Popup';
 
 const selectors = {
-  isProductPage: selectIsProductPage,
   productSchema: selectProductSchema,
 };
 
 const PopupConnector: FC = () => {
-  const { isProductPage, productSchema } = usePsCurrentPageSelectors(selectors);
+  const { productSchema } = usePsCurrentPageSelectors(selectors);
 
   useEffect(() => {
     if (productSchema) {
@@ -23,7 +19,7 @@ const PopupConnector: FC = () => {
     }
   }, [productSchema]);
 
-  return <Popup isProductPage={isProductPage} product={productSchema} />;
+  return <Popup productSchema={productSchema} />;
 };
 
 export default PopupConnector;

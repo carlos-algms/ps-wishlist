@@ -1,10 +1,11 @@
 import { createContext } from '@fluentui/react-context-selector';
 import React, { FC } from 'react';
+import useAsyncEffect from 'use-async-effect';
 
-import getIsProductUrl from '../../../Product/getIsProductUrl';
+import getProductSchema from '../../../Product/getProductSchema';
 import { ProductSchema } from '../../../Product/ProductTypes';
-import useProductSchema from '../../../Product/useProductSchema';
-import useCurrentUrl from '../../hooks/useCurrentUrl';
+import getCurrentTab from '../../getCurrentTab';
+import useMergeableState from '../../hooks/useMergeableState';
 import makeContextSelectorHook from '../makeContextSelector';
 
 export type PSCurrentPageContextValue = {
@@ -28,21 +29,38 @@ export const PSCurrentPageContext = createContext<PSCurrentPageContextValue>(def
 export const usePsCurrentPageSelectors = makeContextSelectorHook(PSCurrentPageContext);
 
 export const PSCurrentPageContextProvider: FC = ({ children }) => {
-  const currentUrl = useCurrentUrl();
-  const isProductPage = getIsProductUrl(currentUrl);
-  const productSchema = useProductSchema(isProductPage, currentUrl);
+  const [state, mergeState] = useMergeableState(defaultValue);
 
-  if (!currentUrl || (isProductPage && !productSchema)) {
-    return null;
-  }
+  const { isProductPage, currentUrl } = state;
 
-  const contextValue: PSCurrentPageContextValue = {
-    currentUrl,
-    isProductPage,
-    productSchema,
-  };
+  useAsyncEffect(async (checkIsMounted) => {
+    const tab = await getCurrentTab();
+    const url = tab.url ?? '';
 
-  return (
-    <PSCurrentPageContext.Provider value={contextValue}>{children}</PSCurrentPageContext.Provider>
+    if (checkIsMounted()) {
+      mergeState({
+        currentUrl: url,
+        isProductPage: url.includes('/product/'),
+      });
+    }
+  }, []);
+
+  useAsyncEffect(
+    async (checkIsMounted) => {
+      if (!isProductPage) {
+        return;
+      }
+
+      const productSchema = await getProductSchema(currentUrl);
+
+      if (checkIsMounted()) {
+        mergeState({
+          productSchema,
+        });
+      }
+    },
+    [currentUrl, isProductPage],
   );
+
+  return <PSCurrentPageContext.Provider value={state}>{children}</PSCurrentPageContext.Provider>;
 };
