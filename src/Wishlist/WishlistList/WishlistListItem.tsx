@@ -1,5 +1,4 @@
 import Avatar from '@material-ui/core/Avatar';
-import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
@@ -9,7 +8,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import DeleteIcon from '@material-ui/icons/Delete';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import React, { FC, MouseEventHandler } from 'react';
-import styled from 'styled-components';
 
 import { formatCurrency } from '../../shared/formatCurrency';
 import { WishlistItem } from '../psWishlistStorage';
@@ -21,23 +19,39 @@ export type Props = {
 
 const AVATAR_SIZE = 128;
 
-const StyledAvatar = styled(Avatar)`
-  width: ${AVATAR_SIZE}px;
-  height: ${AVATAR_SIZE}px;
-  margin-right: ${({ theme }) => theme.spacing(1)}px;
-`;
-
 // https://github.com/mui-org/material-ui/issues/10285
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
+  gutters: {
+    padding: 0,
+  },
+
   listItem: {
+    background: theme.palette.background.paper,
+    marginBottom: theme.spacing(2),
+
+    '&:hover': {
+      backgroundColor: theme.palette.action.hover,
+    },
+
     '&:hover $listItemSecondaryAction': {
       visibility: 'inherit',
     },
   },
+
   listItemSecondaryAction: {
     visibility: 'hidden',
   },
-});
+
+  listItemAvatar: {
+    marginRight: `${theme.spacing(2)}px`,
+    marginTop: 0,
+  },
+
+  avatarRoot: {
+    width: `${AVATAR_SIZE}px`,
+    height: `${AVATAR_SIZE}px`,
+  },
+}));
 
 const WishlistListItem: FC<Props> = ({ item, onRemoveItem }) => {
   const { name, image, discountPrice, currencyCode, sku, productUrl } = item;
@@ -47,13 +61,18 @@ const WishlistListItem: FC<Props> = ({ item, onRemoveItem }) => {
     <>
       <ListItem
         alignItems="flex-start"
-        button
         classes={{
           container: classes.listItem,
+          gutters: classes.gutters,
         }}
       >
-        <ListItemAvatar>
-          <StyledAvatar alt={name} src={`${image}?w=${AVATAR_SIZE}`} variant="rounded" />
+        <ListItemAvatar classes={{ root: classes.listItemAvatar }}>
+          <Avatar
+            classes={{ root: classes.avatarRoot }}
+            alt={name}
+            src={`${image}?w=${AVATAR_SIZE}`}
+            variant="square"
+          />
         </ListItemAvatar>
         <ListItemText primary={name} secondary={formatCurrency(discountPrice, currencyCode)} />
         <ListItemSecondaryAction className={classes.listItemSecondaryAction}>
@@ -75,7 +94,6 @@ const WishlistListItem: FC<Props> = ({ item, onRemoveItem }) => {
           </IconButton>
         </ListItemSecondaryAction>
       </ListItem>
-      <Divider component="li" />
     </>
   );
 };

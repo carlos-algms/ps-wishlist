@@ -9,7 +9,7 @@ import WishlistIcon from '../shared/components/Icons/WishlistIcon';
 import openWishlistPage from '../shared/openWishlistPage';
 
 const Root = styled.main`
-  padding: 0px 20px 20px;
+  padding: ${({ theme }) => theme.spacing(1, 3)};
 `;
 
 export type Props = {

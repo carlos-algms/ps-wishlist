@@ -1,6 +1,8 @@
-import React, { FC } from 'react';
+import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
-import styled from 'styled-components';
+import React, { FC } from 'react';
+
+import Layout from '../../shared/components/Layout';
 import { WishlistItem } from '../psWishlistStorage';
 import WishlistList from '../WishlistList/WishlistList';
 
@@ -8,19 +10,15 @@ export type WishlistPageProps = {
   wishlist: WishlistItem[];
 };
 
-const Colored = styled.div`
-  color: blue;
-`;
-
 const WishlistPage: FC<WishlistPageProps> = ({ wishlist }) => {
   return (
-    <>
-      <Typography variant="h2">
-        <Colored>Wishlist Page</Colored>
-      </Typography>
+    <Layout>
+      <Container>
+        <Typography variant="h2">My Playstation Wishlist</Typography>
 
-      <WishlistList items={wishlist} />
-    </>
+        <WishlistList items={wishlist} />
+      </Container>
+    </Layout>
   );
 };
 
