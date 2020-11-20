@@ -7,6 +7,7 @@ import WishlistListItem from './WishlistListItem';
 
 type Props = {
   items: WishlistItem[];
+  hideVisitLink?: boolean;
 };
 
 const handleRemoveItem: MouseEventHandler<HTMLButtonElement> = (event) => {
@@ -17,11 +18,16 @@ const handleRemoveItem: MouseEventHandler<HTMLButtonElement> = (event) => {
   }
 };
 
-const WishlistList: FC<Props> = ({ items }) => {
+const WishlistList: FC<Props> = ({ items, hideVisitLink }) => {
   return (
     <List>
       {items.map((item) => (
-        <WishlistListItem key={item.sku} item={item} onRemoveItem={handleRemoveItem} />
+        <WishlistListItem
+          key={item.sku}
+          item={item}
+          onRemoveItem={handleRemoveItem}
+          hideVisitLink={hideVisitLink}
+        />
       ))}
     </List>
   );

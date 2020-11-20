@@ -15,6 +15,7 @@ import { WishlistItem } from '../psWishlistStorage';
 export type Props = {
   item: WishlistItem;
   onRemoveItem: MouseEventHandler<HTMLButtonElement>;
+  hideVisitLink?: boolean;
 };
 
 const AVATAR_SIZE = 128;
@@ -53,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const WishlistListItem: FC<Props> = ({ item, onRemoveItem }) => {
+const WishlistListItem: FC<Props> = ({ item, onRemoveItem, hideVisitLink = false }) => {
   const { name, image, discountPrice, currencyCode, sku, productUrl } = item;
 
   const classes = useStyles();
@@ -76,14 +77,16 @@ const WishlistListItem: FC<Props> = ({ item, onRemoveItem }) => {
         </ListItemAvatar>
         <ListItemText primary={name} secondary={formatCurrency(discountPrice, currencyCode)} />
         <ListItemSecondaryAction className={classes.listItemSecondaryAction}>
-          <IconButton
-            aria-label="open in new window"
-            title="Visit the product page at PlayStation store"
-            href={productUrl}
-            target="_blank"
-          >
-            <OpenInNewIcon />
-          </IconButton>
+          {hideVisitLink !== true && (
+            <IconButton
+              aria-label="open in new window"
+              title="Visit the product page at PlayStation store"
+              href={productUrl}
+              target="_blank"
+            >
+              <OpenInNewIcon />
+            </IconButton>
+          )}
           <IconButton
             aria-label="delete"
             title="Remove this item from your wish list"

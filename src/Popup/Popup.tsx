@@ -3,20 +3,23 @@ import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import Divider from '@material-ui/core/Divider';
 import React, { FC } from 'react';
 import styled from 'styled-components';
-
-import { ProductSchema } from '../Product/ProductTypes';
 import WishlistIcon from '../shared/components/Icons/WishlistIcon';
 import openWishlistPage from '../shared/openWishlistPage';
+import { WishlistItem } from '../Wishlist/psWishlistStorage';
+import WishlistList from '../Wishlist/WishlistList/WishlistList';
 
 const Root = styled.main`
+  min-width: 400px;
   padding: ${({ theme }) => theme.spacing(1, 3)};
 `;
 
 export type Props = {
-  productSchema: ProductSchema | null;
+  wishlistItem?: WishlistItem | null;
 };
 
-const Popup: FC<Props> = ({ productSchema }) => {
+const Popup: FC<Props> = ({ wishlistItem }) => {
+  const list = wishlistItem && [wishlistItem];
+
   return (
     <Root>
       <BottomNavigation showLabels>
@@ -29,7 +32,7 @@ const Popup: FC<Props> = ({ productSchema }) => {
       </BottomNavigation>
       <Divider />
 
-      {productSchema && <h1>Show Product Card</h1>}
+      {list && <WishlistList items={list} hideVisitLink />}
     </Root>
   );
 };
