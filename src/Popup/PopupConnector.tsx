@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react';
+import { FC, useEffect } from 'react';
 import { usePsCurrentPageSelectors } from '../shared/contexts/currentPage/PSCurrentPageContext';
 import { selectProductSchema } from '../shared/contexts/currentPage/psCurrentPageSelectors';
 import { usePsWishlistSelectors } from '../Wishlist/PSWishlistContext/PSWishlistContext';

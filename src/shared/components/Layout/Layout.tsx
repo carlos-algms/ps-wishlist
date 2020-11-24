@@ -1,5 +1,5 @@
 import CssBaseline from '@material-ui/core/CssBaseline';
-import React, { FC } from 'react';
+import type { FC } from 'react';
 import styled from 'styled-components';
 
 const StyledMainContent = styled.div`

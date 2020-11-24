@@ -1,9 +1,9 @@
 import { createContext } from '@fluentui/react-context-selector';
-import React, { FC } from 'react';
+import type { FC } from 'react';
 import useAsyncEffect from 'use-async-effect';
 
 import getProductSchema from '../../../Product/getProductSchema';
-import { ProductSchema } from '../../../Product/ProductTypes';
+import type { ProductSchema } from '../../../Product/ProductTypes';
 import getCurrentTab from '../../getCurrentTab';
 import useMergeableState from '../../hooks/useMergeableState';
 import makeContextSelectorHook from '../makeContextSelector';

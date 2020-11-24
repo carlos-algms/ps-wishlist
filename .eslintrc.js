@@ -33,6 +33,8 @@ const options = {
   },
   rules: {
     'react/no-unknown-property': ['error', { ignore: ['class'] }],
+    'react/jsx-uses-react': 'off',
+    'react/react-in-jsx-scope': 'off',
     'no-restricted-imports': [
       'error',
       {

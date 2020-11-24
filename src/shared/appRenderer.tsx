@@ -1,4 +1,4 @@
-import React, { ComponentType } from 'react';
+import { ComponentType } from 'react';
 import { render } from 'react-dom';
 
 export default function appRenderer(App: ComponentType, rootElementId = 'AppRoot'): void {

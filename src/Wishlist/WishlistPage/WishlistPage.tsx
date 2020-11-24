@@ -1,9 +1,9 @@
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
-import React, { FC } from 'react';
+import type { FC } from 'react';
 
 import Layout from '../../shared/components/Layout';
-import { WishlistItem } from '../psWishlistStorage';
+import type { WishlistItem } from '../psWishlistStorage';
 import WishlistList from '../WishlistList/WishlistList';
 
 export type WishlistPageProps = {

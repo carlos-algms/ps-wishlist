@@ -2,6 +2,7 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const createStyledComponentsTransformer = require('typescript-plugin-styled-components').default;
 const CopyPlugin = require('copy-webpack-plugin');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 /**
  * @param {WebpackEnvFlags} envFlags
@@ -10,6 +11,8 @@ const CopyPlugin = require('copy-webpack-plugin');
  */
 const webpackFactory = (envFlags, argv) => {
   const isProduction = argv.mode === 'production';
+  const isAnalyseMode = argv.analyze === true;
+
   const styledComponentsTransformer = createStyledComponentsTransformer({
     minify: isProduction,
   });
@@ -24,7 +27,7 @@ const webpackFactory = (envFlags, argv) => {
       path: __dirname + '/dist',
       filename: '[name].js',
     },
-    devtool: 'inline-source-map',
+    devtool: isAnalyseMode ? false : 'inline-source-map',
     plugins: [
       new HtmlWebpackPlugin({
         title: 'Wishlist Page',
@@ -41,7 +44,11 @@ const webpackFactory = (envFlags, argv) => {
       new CopyPlugin({
         patterns: [{ from: 'manifest.json' }, { from: 'images/', to: 'images/' }],
       }),
-    ],
+      isAnalyseMode &&
+        new BundleAnalyzerPlugin({
+          analyzerPort: 9088,
+        }),
+    ].filter(Boolean),
     resolve: {
       extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
     },
@@ -54,6 +61,7 @@ const webpackFactory = (envFlags, argv) => {
             loader: 'ts-loader',
             options: {
               getCustomTransformers: () => ({ before: [styledComponentsTransformer] }),
+              configFile: isProduction ? 'tsconfig.prod.json' : 'tsconfig.json',
             },
           },
         },
@@ -84,6 +92,7 @@ module.exports = webpackFactory;
 /**
  * @typedef {{
  * color: boolean,
- * mode: 'production' | 'development'
+ * mode: 'production' | 'development',
+ * analyze: boolean,
  * }} Argv
  */

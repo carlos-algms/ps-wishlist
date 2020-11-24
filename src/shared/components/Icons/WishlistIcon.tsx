@@ -1,6 +1,6 @@
 import GamepadIcon from '@material-ui/icons/Gamepad';
 import ListAltIcon from '@material-ui/icons/ListAlt';
-import React, { FC } from 'react';
+import type { FC } from 'react';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`

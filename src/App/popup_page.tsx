@@ -1,7 +1,7 @@
-import React, { FC } from 'react';
+import type { FC } from 'react';
 import Popup from '../Popup';
-import Providers from '../shared/contexts/Providers';
 import appRenderer from '../shared/appRenderer';
+import Providers from '../shared/contexts/Providers';
 
 export const PopupEntryPoint: FC = () => {
   return (

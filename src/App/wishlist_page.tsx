@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import type { FC } from 'react';
 import appRenderer from '../shared/appRenderer';
 import Providers from '../shared/contexts/Providers';
 import WishlistPage from '../Wishlist/WishlistPage';

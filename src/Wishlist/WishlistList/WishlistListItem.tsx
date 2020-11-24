@@ -7,10 +7,9 @@ import ListItemText from '@material-ui/core/ListItemText';
 import { makeStyles } from '@material-ui/core/styles';
 import DeleteIcon from '@material-ui/icons/Delete';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
-import React, { FC, MouseEventHandler } from 'react';
-
+import type { FC, MouseEventHandler } from 'react';
 import { formatCurrency } from '../../shared/formatCurrency';
-import { WishlistItem } from '../psWishlistStorage';
+import type { WishlistItem } from '../psWishlistStorage';
 
 export type Props = {
   item: WishlistItem;

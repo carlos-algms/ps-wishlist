@@ -20,7 +20,7 @@
     "downlevelIteration": true,
     "newLine": "lf",
     "removeComments": false,
-    "jsx": "react",
+    "jsx": "react-jsxdev",
     "skipLibCheck": true
   },
   "include": ["src/**/*.tsx", "src/**/*.ts"],

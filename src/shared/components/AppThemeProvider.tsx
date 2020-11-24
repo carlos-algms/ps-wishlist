@@ -3,7 +3,7 @@ import {
   StylesProvider,
   ThemeProvider as MuiThemeProvider,
 } from '@material-ui/core/styles';
-import React, { FC, ReactNode } from 'react';
+import type { FC, ReactNode } from 'react';
 import { ThemeProvider as StyledComponentsThemeProvider } from 'styled-components';
 
 type Props = {

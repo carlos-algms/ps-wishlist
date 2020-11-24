@@ -1,5 +1,5 @@
 import List from '@material-ui/core/List';
-import React, { FC, MouseEventHandler } from 'react';
+import type { FC, MouseEventHandler } from 'react';
 
 import { removeProductFromWishListStorage, WishlistItem } from '../psWishlistStorage';
 

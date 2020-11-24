@@ -1,5 +1,5 @@
 import { createContext } from '@fluentui/react-context-selector';
-import React, { FC, useEffect } from 'react';
+import { FC, useEffect } from 'react';
 import useAsyncEffect from 'use-async-effect';
 
 import makeContextSelectorHook from '../../shared/contexts/makeContextSelector';

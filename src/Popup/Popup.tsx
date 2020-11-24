@@ -1,11 +1,11 @@
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import Divider from '@material-ui/core/Divider';
-import React, { FC } from 'react';
+import type { FC } from 'react';
 import styled from 'styled-components';
 import WishlistIcon from '../shared/components/Icons/WishlistIcon';
 import openWishlistPage from '../shared/openWishlistPage';
-import { WishlistItem } from '../Wishlist/psWishlistStorage';
+import type { WishlistItem } from '../Wishlist/psWishlistStorage';
 import WishlistList from '../Wishlist/WishlistList/WishlistList';
 
 const Root = styled.main`

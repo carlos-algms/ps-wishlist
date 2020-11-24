@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import type { FC } from 'react';
 
 import { usePsWishlistSelectors } from '../PSWishlistContext/PSWishlistContext';
 import { selectWishlist } from '../PSWishlistContext/wishlistSelectors';

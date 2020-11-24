@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import type { FC } from 'react';
 import { PSCurrentPageContextProvider } from './currentPage/PSCurrentPageContext';
 import { PSWishlistContextProvider } from '../../Wishlist/PSWishlistContext/PSWishlistContext';
 import AppThemeProvider from '../components/AppThemeProvider';
