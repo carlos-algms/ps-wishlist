@@ -56,9 +56,15 @@ const options = {
         '@typescript-eslint/no-var-requires': 'off',
       },
     },
+    {
+      files: ['*.d.ts'],
+      rules: {
+        '@typescript-eslint/no-unused-vars': 'off',
+      },
+    },
   ],
 
-  ignorePatterns: ['node_modules/', 'lib/', 'public/', 'build/', 'dist/'],
+  ignorePatterns: ['node_modules/', 'lib/', 'public/', 'build/', 'dist/', '.temp'],
 };
 
 module.exports = options;

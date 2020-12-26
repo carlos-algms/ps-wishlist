@@ -1,8 +1,16 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 // @ts-check
+const { EnvironmentPlugin } = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const createStyledComponentsTransformer = require('typescript-plugin-styled-components').default;
 const CopyPlugin = require('copy-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+
+/**
+ * @type {import('./package.json')}
+ */
+const packageJson = require('./package.json');
 
 /**
  * @param {WebpackEnvFlags} envFlags
@@ -22,6 +30,7 @@ const webpackFactory = (envFlags, argv) => {
       background: __dirname + '/src/App/background.ts',
       wishlist: __dirname + '/src/App/wishlist_page.tsx',
       popup: __dirname + '/src/App/popup_page.tsx',
+      options: __dirname + '/src/App/options_page.tsx',
     },
     output: {
       path: __dirname + '/dist',
@@ -29,6 +38,10 @@ const webpackFactory = (envFlags, argv) => {
     },
     devtool: isAnalyseMode ? false : 'inline-source-map',
     plugins: [
+      new EnvironmentPlugin({
+        APP_VERSION: packageJson.version,
+        BUILD_DATE: formatDate(),
+      }),
       new HtmlWebpackPlugin({
         title: 'Wishlist Page',
         filename: 'wishlist.html',
@@ -40,6 +53,12 @@ const webpackFactory = (envFlags, argv) => {
         filename: 'popup.html',
         template: __dirname + '/src/template.html',
         chunks: ['popup'],
+      }),
+      new HtmlWebpackPlugin({
+        title: 'My PlayStation Wishlist',
+        filename: 'options.html',
+        template: __dirname + '/src/template.html',
+        chunks: ['options'],
       }),
       new CopyPlugin({
         patterns: [{ from: 'manifest.json' }, { from: 'images/', to: 'images/' }],
@@ -96,3 +115,18 @@ module.exports = webpackFactory;
  * analyze: boolean,
  * }} Argv
  */
+
+/**
+ * @param {Date} date
+ * @returns {string} Format: YYYY.mm.dd
+ */
+function formatDate(date = new Date()) {
+  const year = date.getFullYear();
+  const month = date.getMonth();
+  const day = date.getDate();
+
+  const month2Digits = `0${month}`.slice(-2);
+  const day2Digits = `0${day}`.slice(-2);
+
+  return `${year}.${month2Digits}.${day2Digits}`;
+}
