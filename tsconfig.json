@@ -21,7 +21,8 @@
     "newLine": "lf",
     "removeComments": false,
     "jsx": "react-jsxdev",
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "resolveJsonModule": true
   },
   "include": ["src/**/*.tsx", "src/**/*.ts"],
   "exclude": ["node_modules", ".vscode-test", "build"]

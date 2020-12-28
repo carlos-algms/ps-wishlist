@@ -18,6 +18,7 @@ const options = {
     'plugin:prettier/recommended',
     'prettier/@typescript-eslint',
     'prettier/react',
+    'plugin:import/typescript',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
