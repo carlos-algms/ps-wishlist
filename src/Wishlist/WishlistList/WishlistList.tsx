@@ -5,12 +5,12 @@ import { removeProductFromWishListStorage, WishlistItem } from '../psWishlistSto
 
 import WishlistListItem from './WishlistListItem';
 
-type Props = {
+export type WishlistProps = {
   items: WishlistItem[];
   hideVisitLink?: boolean;
 };
 
-const handleRemoveItem: MouseEventHandler<HTMLButtonElement> = (event) => {
+export const handleRemoveItem: MouseEventHandler<HTMLButtonElement> = (event) => {
   const sku = event.currentTarget.dataset.sku;
 
   if (sku) {
@@ -18,7 +18,7 @@ const handleRemoveItem: MouseEventHandler<HTMLButtonElement> = (event) => {
   }
 };
 
-const WishlistList: FC<Props> = ({ items, hideVisitLink }) => {
+const WishlistList: FC<WishlistProps> = ({ items, hideVisitLink }) => {
   return (
     <List>
       {items.map((item) => (

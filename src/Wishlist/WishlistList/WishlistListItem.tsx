@@ -7,14 +7,17 @@ import ListItemText from '@material-ui/core/ListItemText';
 import { makeStyles } from '@material-ui/core/styles';
 import DeleteIcon from '@material-ui/icons/Delete';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
-import type { FC, MouseEventHandler } from 'react';
+import { CSSProperties, forwardRef, MouseEventHandler, ReactNode } from 'react';
+
 import { formatCurrency } from '../../shared/formatCurrency';
 import type { WishlistItem } from '../psWishlistStorage';
 
-export type Props = {
+export type WishlistListItemProps = {
   item: WishlistItem;
   onRemoveItem: MouseEventHandler<HTMLButtonElement>;
   hideVisitLink?: boolean;
+  children?: ReactNode;
+  style?: CSSProperties;
 };
 
 const AVATAR_SIZE = 128;
@@ -28,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
   listItem: {
     background: theme.palette.background.paper,
     marginBottom: theme.spacing(2),
+    boxShadow: theme.shadows[1],
 
     '&:hover': {
       backgroundColor: theme.palette.action.hover,
@@ -53,51 +57,56 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const WishlistListItem: FC<Props> = ({ item, onRemoveItem, hideVisitLink = false }) => {
+const WishlistListItem = forwardRef<HTMLLIElement | null, WishlistListItemProps>((props, ref) => {
+  const { item, onRemoveItem, hideVisitLink = false, children, style } = props;
   const { name, image, discountPrice, currencyCode, sku, productUrl } = item;
 
   const classes = useStyles();
+
   return (
-    <>
-      <ListItem
-        alignItems="flex-start"
-        classes={{
-          container: classes.listItem,
-          gutters: classes.gutters,
-        }}
-      >
-        <ListItemAvatar classes={{ root: classes.listItemAvatar }}>
-          <Avatar
-            classes={{ root: classes.avatarRoot }}
-            alt={name}
-            src={`${image}?w=${AVATAR_SIZE}`}
-            variant="square"
-          />
-        </ListItemAvatar>
-        <ListItemText primary={name} secondary={formatCurrency(discountPrice, currencyCode)} />
-        <ListItemSecondaryAction className={classes.listItemSecondaryAction}>
-          {hideVisitLink !== true && (
-            <IconButton
-              aria-label="open in new window"
-              title="Visit the product page at PlayStation store"
-              href={productUrl}
-              target="_blank"
-            >
-              <OpenInNewIcon />
-            </IconButton>
-          )}
+    <ListItem
+      ref={ref}
+      alignItems="flex-start"
+      classes={{
+        container: classes.listItem,
+        gutters: classes.gutters,
+      }}
+      style={style}
+    >
+      {children}
+      <ListItemAvatar classes={{ root: classes.listItemAvatar }}>
+        <Avatar
+          classes={{ root: classes.avatarRoot }}
+          alt={name}
+          src={`${image}?w=${AVATAR_SIZE}`}
+          variant="square"
+        />
+      </ListItemAvatar>
+      <ListItemText primary={name} secondary={formatCurrency(discountPrice, currencyCode)} />
+      <ListItemSecondaryAction className={classes.listItemSecondaryAction}>
+        {hideVisitLink !== true && (
           <IconButton
-            aria-label="delete"
-            title="Remove this item from your wish list"
-            data-sku={sku}
-            onClick={onRemoveItem}
+            aria-label="open in new window"
+            title="Visit the product page at PlayStation store"
+            href={productUrl}
+            target="_blank"
           >
-            <DeleteIcon />
+            <OpenInNewIcon />
           </IconButton>
-        </ListItemSecondaryAction>
-      </ListItem>
-    </>
+        )}
+        <IconButton
+          aria-label="delete"
+          title="Remove this item from your wish list"
+          data-sku={sku}
+          onClick={onRemoveItem}
+        >
+          <DeleteIcon />
+        </IconButton>
+      </ListItemSecondaryAction>
+    </ListItem>
   );
-};
+});
+
+WishlistListItem.displayName = 'WishlistListItem';
 
 export default WishlistListItem;

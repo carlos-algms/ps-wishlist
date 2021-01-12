@@ -18,6 +18,8 @@ const options = {
     'plugin:prettier/recommended',
     'prettier/@typescript-eslint',
     'prettier/react',
+    'plugin:import/errors',
+    'plugin:import/warnings',
     'plugin:import/typescript',
   ],
   parser: '@typescript-eslint/parser',
@@ -44,6 +46,19 @@ const options = {
       },
     ],
     'react/prop-types': 'off',
+    'import/first': 'error',
+    'import/order': [
+      'error',
+      {
+        groups: [
+          ['builtin', 'external'],
+          ['parent', 'internal'],
+          ['index', 'sibling'],
+        ],
+        'newlines-between': 'always',
+        alphabetize: { order: 'asc', caseInsensitive: true },
+      },
+    ],
   },
   overrides: [
     {

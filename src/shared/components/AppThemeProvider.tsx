@@ -10,7 +10,28 @@ type Props = {
   children: ReactNode;
 };
 
-const appTheme = createMuiTheme({});
+const appTheme = createMuiTheme({
+  typography: {
+    h1: {
+      fontWeight: 100,
+    },
+    h2: {
+      fontWeight: 100,
+    },
+    h3: {
+      fontWeight: 100,
+    },
+    h4: {
+      fontWeight: 100,
+    },
+    h5: {
+      fontWeight: 100,
+    },
+    h6: {
+      fontWeight: 100,
+    },
+  },
+});
 
 export type AppTheme = typeof appTheme;
 

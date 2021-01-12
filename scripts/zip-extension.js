@@ -1,6 +1,7 @@
+// @ts-check
+const archiver = require('archiver');
 const fs = require('fs');
 const path = require('path');
-const archiver = require('archiver');
 const prettyBytes = require('pretty-bytes');
 
 const pathFromRoot = (...pieces) => path.join(__dirname, '..', ...pieces);
@@ -8,6 +9,7 @@ const pathFromRoot = (...pieces) => path.join(__dirname, '..', ...pieces);
 /**
  * @type {typeof import('../package.json')}
  */
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 const pkgJson = require(pathFromRoot('package.json'));
 
 const outFileName = `extension-v${pkgJson.version}.zip`;
@@ -29,11 +31,11 @@ archive.on('warning', (err) => {
 });
 
 archive.on('error', (err) => {
-  console.error(error.message);
+  console.error(err.message);
   throw err;
 });
 
 archive.pipe(output);
 archive.directory(pathFromRoot('dist'), false);
 
-archive.finalize();
+void archive.finalize();

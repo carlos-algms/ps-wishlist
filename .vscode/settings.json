@@ -2,5 +2,9 @@
   "editor.formatOnSave": true,
   "npm.packageManager": "yarn",
   "prettier.packageManager": "yarn",
-  "typescript.tsdk": "node_modules/typescript/lib"
+  "eslint.packageManager": "yarn",
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  }
 }
