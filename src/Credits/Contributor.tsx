@@ -1,20 +1,13 @@
 import Avatar from '@material-ui/core/Avatar';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
-import { FC } from 'react';
-import styled from 'styled-components';
+import { styled } from '@material-ui/core/styles';
+import type { FC } from 'react';
 
 type ContributorProps = {
   userName: string;
   displayName: string;
 };
-
-const CardStyled = styled(Card)`
-  a {
-    color: ${({ theme }) => theme.palette.text.secondary};
-    text-decoration: none;
-  }
-`;
 
 const Contributor: FC<ContributorProps> = ({ userName, displayName }) => {
   const url = `https://github.com/${userName}`;
@@ -43,3 +36,10 @@ const Contributor: FC<ContributorProps> = ({ userName, displayName }) => {
 };
 
 export default Contributor;
+
+const CardStyled = styled(Card)(({ theme }) => ({
+  '& a': {
+    color: theme.palette.text.secondary,
+    'text-decoration': 'none',
+  },
+}));

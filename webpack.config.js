@@ -1,10 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 // @ts-check
-const { EnvironmentPlugin } = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const createStyledComponentsTransformer = require('typescript-plugin-styled-components').default;
 const CopyPlugin = require('copy-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { EnvironmentPlugin } = require('webpack');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 /**
@@ -20,10 +19,6 @@ const packageJson = require('./package.json');
 const webpackFactory = (envFlags, argv) => {
   const isProduction = argv.mode === 'production';
   const isAnalyseMode = argv.analyze === true;
-
-  const styledComponentsTransformer = createStyledComponentsTransformer({
-    minify: isProduction,
-  });
 
   return {
     entry: {
@@ -79,7 +74,6 @@ const webpackFactory = (envFlags, argv) => {
           use: {
             loader: 'ts-loader',
             options: {
-              getCustomTransformers: () => ({ before: [styledComponentsTransformer] }),
               configFile: isProduction ? 'tsconfig.prod.json' : 'tsconfig.json',
             },
           },

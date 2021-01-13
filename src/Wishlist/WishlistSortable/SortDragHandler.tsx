@@ -1,8 +1,8 @@
+import { styled } from '@material-ui/core/styles';
 import DragHandleIcon from '@material-ui/icons/DragHandle';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import type { FC } from 'react';
-import styled from 'styled-components';
 
 const SortDragHandler: FC = () => {
   return (
@@ -16,24 +16,23 @@ const SortDragHandler: FC = () => {
 
 export default SortDragHandler;
 
-const Wrapper = styled.div`
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 0 auto;
-  cursor: grab;
+const Wrapper = styled('div')({
+  position: 'relative',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  margin: '0 auto',
+  cursor: 'grab',
 
-  .icon-up,
-  .icon-down {
-    font-size: 1.1rem;
-  }
+  '& .icon-up, & .icon-down': {
+    fontSize: '1.1rem',
+  },
 
-  .icon-up {
-    margin-bottom: -12px;
-  }
+  '& .icon-up': {
+    marginBottom: -12,
+  },
 
-  .icon-down {
-    margin-top: -12px;
-  }
-`;
+  '& .icon-down': {
+    marginTop: -12,
+  },
+});

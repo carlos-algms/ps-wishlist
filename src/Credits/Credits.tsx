@@ -1,12 +1,7 @@
 import Box from '@material-ui/core/Box';
+import { styled } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import { FC } from 'react';
-import styled from 'styled-components';
-
-const VerticalAlign = styled.div`
-  display: flex;
-  align-items: center;
-`;
+import type { FC } from 'react';
 
 const Credits: FC = () => {
   return (
@@ -35,3 +30,8 @@ const Credits: FC = () => {
 };
 
 export default Credits;
+
+const VerticalAlign = styled('div')({
+  display: 'flex',
+  'align-items': 'center',
+});

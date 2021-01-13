@@ -1,6 +1,6 @@
 import ListItemIcon from '@material-ui/core/ListItemIcon';
+import { styled } from '@material-ui/core/styles';
 import { FC, useRef } from 'react';
-import styled from 'styled-components';
 
 import WishlistListItem, { WishlistListItemProps } from '../WishlistList/WishlistListItem';
 
@@ -39,7 +39,7 @@ const WishlistSortableItem: FC<WishlistSortableItemProps> = (props) => {
 
 export default WishlistSortableItem;
 
-const ListItemIconStyled = styled(ListItemIcon)`
-  align-self: center;
-  margin: 0;
-`;
+const ListItemIconStyled = styled(ListItemIcon)({
+  alignSelf: 'center',
+  margin: 0,
+});
