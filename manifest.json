@@ -22,7 +22,14 @@
     "persistent": false
   },
   "options_page": "options.html",
-  "permissions": ["declarativeContent", "storage", "activeTab", "tabs"],
+  "permissions": [
+    "declarativeContent",
+    "storage",
+    "activeTab",
+    "tabs",
+    "alarms",
+    "https://store.playstation.com/*"
+  ],
   "manifest_version": 2,
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
   "web_accessible_resources": ["images/**/*", "*.js", "*.map"]

@@ -3,6 +3,7 @@ import { ProductSchema } from '../Product/ProductTypes';
 export type WishlistItem = ProductSchema & {
   includedAt: number;
   userRankPosition: number;
+  lastUpdatedAt: number;
 };
 
 const KEY = 'wishlistStore';
@@ -68,6 +69,7 @@ export function productToWishListItem(product: ProductSchema): WishlistItem {
     ...product,
     includedAt: Date.now(),
     userRankPosition: 9999,
+    lastUpdatedAt: Date.now(),
   };
 
   return item;

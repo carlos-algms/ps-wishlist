@@ -1,9 +1,26 @@
-// Copyright (c) 2011 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
-// When the extension is installed or upgraded ...
+import {
+  PRICE_UPDATE_ALARM_NAME,
+  PRICE_UPDATE_ALARM_PERIOD_IN_MINUTES,
+  refreshProductsData,
+} from '../Wishlist/Schedule/refreshProductsData';
+
 chrome.runtime.onInstalled.addListener((): void => {
-  console.log('Background addListener');
+  chrome.alarms.clearAll(() => {
+    chrome.alarms.create(PRICE_UPDATE_ALARM_NAME, {
+      periodInMinutes: PRICE_UPDATE_ALARM_PERIOD_IN_MINUTES,
+    });
+  });
+
+  handleDeclarativeContent();
+});
+
+chrome.alarms.onAlarm.addListener((alarm) => {
+  if (alarm.name === PRICE_UPDATE_ALARM_NAME) {
+    void refreshProductsData();
+  }
+});
+
+function handleDeclarativeContent() {
   // Replace all rules ...
   chrome.declarativeContent.onPageChanged.removeRules(undefined, () => {
     // With a new rule ...
@@ -20,6 +37,4 @@ chrome.runtime.onInstalled.addListener((): void => {
       },
     ]);
   });
-});
-
-console.log('background running');
+}

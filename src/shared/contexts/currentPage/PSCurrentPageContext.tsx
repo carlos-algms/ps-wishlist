@@ -2,7 +2,7 @@ import { createContext } from '@fluentui/react-context-selector';
 import type { FC } from 'react';
 import useAsyncEffect from 'use-async-effect';
 
-import getProductSchema from '../../../Product/getProductSchema';
+import getProductSchemaFromCurrentTab from '../../../Product/getProductSchema';
 import type { ProductSchema } from '../../../Product/ProductTypes';
 import getCurrentTab from '../../getCurrentTab';
 import useMergeableState from '../../hooks/useMergeableState';
@@ -51,7 +51,7 @@ export const PSCurrentPageContextProvider: FC = ({ children }) => {
         return;
       }
 
-      const productSchema = await getProductSchema(currentUrl);
+      const productSchema = await getProductSchemaFromCurrentTab(currentUrl);
 
       if (checkIsMounted()) {
         mergeState({
