@@ -6,7 +6,9 @@ const path = require('path');
 const buildExtensionFileName = require('../shared/buildExtensionFileName');
 const pathFromRoot = require('../shared/pathFromRoot');
 
-const octokit = new Octokit();
+const octokit = new Octokit({
+  auth: process.env.GITHUB_TOKEN,
+});
 
 const file = pathFromRoot(buildExtensionFileName());
 
@@ -15,15 +17,16 @@ const repo = 'ps-wishlist';
 
 void (async () => {
   try {
-    const latestRelease = await octokit.repos.getLatestRelease({
+    const release = await octokit.repos.getReleaseByTag({
       owner,
       repo,
+      tag: process.env.TAG,
     });
 
     const result = await octokit.repos.uploadReleaseAsset({
       owner,
       repo,
-      release_id: latestRelease.data.id,
+      release_id: release.data.id,
       data: fs.createReadStream(file),
       headers: {
         'Content-Type': mime.lookup(file) || 'application/octet-stream',
