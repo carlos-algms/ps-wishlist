@@ -16,23 +16,33 @@ const owner = 'carlos-algms';
 const repo = 'ps-wishlist';
 
 void (async () => {
-  const release = await octokit.repos.getReleaseByTag({
-    owner,
-    repo,
-    tag: process.env.TAG,
-  });
+  try {
+    console.log(`Fetch release data for tag: [${process.env.TAG ?? 'no tag provided'}]`);
 
-  const result = await octokit.repos.uploadReleaseAsset({
-    owner,
-    repo,
-    release_id: release.data.id,
-    data: fs.createReadStream(file),
-    headers: {
-      'Content-Type': mime.lookup(file) || 'application/octet-stream',
-      'Content-Length': fs.statSync(file).size,
-    },
-    name: path.basename(file),
-  });
+    const { data: releaseData } = await octokit.repos.getReleaseByTag({
+      owner,
+      repo,
+      tag: process.env.TAG,
+    });
 
-  console.log('Extension uploaded:', result.data.browser_download_url);
+    console.log(`Release Data: id: [${releaseData.id}], tag: [${releaseData.tag_name}]`);
+
+    console.log(`\n\nUpload file: [${file}] \n\n\n`);
+
+    const result = await octokit.repos.uploadReleaseAsset({
+      owner,
+      repo,
+      release_id: releaseData.id,
+      data: fs.createReadStream(file),
+      headers: {
+        'Content-Type': mime.lookup(file) || 'application/octet-stream',
+        'Content-Length': fs.statSync(file).size,
+      },
+      name: path.basename(file),
+    });
+    console.log('Extension uploaded: ', result.data.browser_download_url);
+  } catch (error) {
+    console.error(error);
+    process.exit(1);
+  }
 })();
