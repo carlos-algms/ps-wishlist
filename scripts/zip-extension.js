@@ -1,18 +1,12 @@
 // @ts-check
 const archiver = require('archiver');
 const fs = require('fs');
-const path = require('path');
 const prettyBytes = require('pretty-bytes');
 
-const pathFromRoot = (...pieces) => path.join(__dirname, '..', ...pieces);
+const buildExtensionFileName = require('./shared/buildExtensionFileName');
+const pathFromRoot = require('./shared/pathFromRoot');
 
-/**
- * @type {typeof import('../package.json')}
- */
-// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-const pkgJson = require(pathFromRoot('package.json'));
-
-const outFileName = `extension-v${pkgJson.version}.zip`;
+const outFileName = buildExtensionFileName();
 
 const output = fs.createWriteStream(pathFromRoot(outFileName));
 const archive = archiver('zip');

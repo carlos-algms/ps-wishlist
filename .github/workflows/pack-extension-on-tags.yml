@@ -1,0 +1,42 @@
+name: Pack Extension on Tags
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  pack-extension:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14
+
+      - uses: actions/cache@v2
+        with:
+          path: |
+            **/node_modules
+          key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: prepare
+        run: |
+          cd "$GITHUB_WORKSPACE"
+          git config --global user.name "${GITHUB_ACTOR}"
+          git config --global user.email "${GITHUB_ACTOR}@bots.github.com"
+
+      - run: yarn install --frozen-lockfile
+
+      - run: yarn build
+
+      - run: yarn pack
+
+      - run: |
+          cd scripts/upload-extension
+          yarn install --frozen-lockfile
+          node ./upload
