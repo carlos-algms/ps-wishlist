@@ -17,7 +17,9 @@ const repo = 'ps-wishlist';
 
 void (async () => {
   try {
-    console.log(`Fetch release data for tag: [${process.env.TAG ?? 'no tag provided'}]`);
+    const tag = process.env.TAG.replace('refs/tags/', '');
+
+    console.log(`Fetch release data for tag: [${tag}]`);
 
     const { data: releaseData } = await octokit.repos.getReleaseByTag({
       owner,
