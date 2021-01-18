@@ -10,6 +10,7 @@ Sony removed the feature from PlayStation website and there is no official alter
 - Sort by price
 - Sort by date added
 - Drag-and-Drop your own sort order
+- Keep your list updated by periodically check for price changes in the background
 
 ![wishlist](images/screenshots/wishlist-with-sorting.png)
 
@@ -17,6 +18,5 @@ Sony removed the feature from PlayStation website and there is no official alter
 
 ## Planed
 
-- periodically check for price updates and notify about sales
-
+- notify about sales
 - Your call, [open a request](issues) so we can discus and implement
