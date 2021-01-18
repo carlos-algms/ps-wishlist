@@ -34,7 +34,7 @@ jobs:
 
       - run: yarn build
 
-      - run: yarn pack
+      - run: yarn run pack
 
       - run: |
           cd scripts/upload-extension
