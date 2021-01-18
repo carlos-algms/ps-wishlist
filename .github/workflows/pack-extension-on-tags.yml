@@ -40,7 +40,7 @@ jobs:
       - name: upload zip to tag
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          TAG: ${{ GITHUB_REF }}
+          TAG: ${{ github.ref }}
         run: |
           cd scripts/upload-extension
           yarn install --frozen-lockfile
