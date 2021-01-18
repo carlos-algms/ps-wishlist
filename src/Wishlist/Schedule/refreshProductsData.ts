@@ -25,7 +25,8 @@ export async function refreshProductsData(): Promise<void> {
 }
 
 function updateItem(item: WishlistItem, productSchema: ProductSchema) {
+  item.lastUpdatedAt = Date.now();
   item.discountPrice = productSchema.discountPrice;
   item.originalPrice = productSchema.originalPrice;
-  item.lastUpdatedAt = Date.now();
+  item.discountEndTime = productSchema.discountEndTime;
 }

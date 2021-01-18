@@ -9,8 +9,9 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import { CSSProperties, forwardRef, MouseEventHandler, ReactNode } from 'react';
 
-import { formatCurrency } from '../../shared/formatCurrency';
 import type { WishlistItem } from '../psWishlistStorage';
+
+import MetaData from './MetaData';
 
 export type WishlistListItemProps = {
   item: WishlistItem;
@@ -20,12 +21,92 @@ export type WishlistListItemProps = {
   style?: CSSProperties;
 };
 
+const secondaryTypographyProps: { component: 'div' } = { component: 'div' };
+
+const WishlistListItem = forwardRef<HTMLLIElement | null, WishlistListItemProps>((props, ref) => {
+  const { item, onRemoveItem, hideVisitLink = false, children, style } = props;
+  const {
+    name,
+    image,
+    discountPrice,
+    originalPrice,
+    currencyCode,
+    sku,
+    productUrl,
+    discountEndTime,
+  } = item;
+
+  const classes = useStyles();
+
+  return (
+    <ListItem
+      ref={ref}
+      classes={{
+        root: classes.listItemRoot,
+        container: classes.listItem,
+        gutters: classes.gutters,
+      }}
+      style={style}
+    >
+      {children}
+      <ListItemAvatar classes={{ root: classes.listItemAvatar }}>
+        <Avatar
+          classes={{ root: classes.avatarRoot }}
+          alt={name}
+          src={`${image}?w=${AVATAR_SIZE}`}
+          variant="square"
+        />
+      </ListItemAvatar>
+      <ListItemText
+        primary={name}
+        secondaryTypographyProps={secondaryTypographyProps}
+        secondary={
+          <MetaData
+            price={discountPrice}
+            originalPrice={originalPrice}
+            currencyCode={currencyCode}
+            discountEndTime={discountEndTime}
+          />
+        }
+      />
+      <ListItemSecondaryAction className={classes.listItemSecondaryAction}>
+        {hideVisitLink !== true && (
+          <IconButton
+            aria-label="open in new window"
+            title="Visit the product page at PlayStation store"
+            href={productUrl}
+            target="_blank"
+          >
+            <OpenInNewIcon />
+          </IconButton>
+        )}
+        <IconButton
+          aria-label="delete"
+          title="Remove this item from your wish list"
+          data-sku={sku}
+          onClick={onRemoveItem}
+        >
+          <DeleteIcon />
+        </IconButton>
+      </ListItemSecondaryAction>
+    </ListItem>
+  );
+});
+
+WishlistListItem.displayName = 'WishlistListItem';
+
+export default WishlistListItem;
+
 const AVATAR_SIZE = 128;
 
 // https://github.com/mui-org/material-ui/issues/10285
 const useStyles = makeStyles((theme) => ({
   gutters: {
     padding: 0,
+  },
+
+  listItemRoot: {
+    alignItems: 'stretch',
   },
 
   listItem: {
@@ -56,57 +137,3 @@ const useStyles = makeStyles((theme) => ({
     height: `${AVATAR_SIZE}px`,
   },
 }));
-
-const WishlistListItem = forwardRef<HTMLLIElement | null, WishlistListItemProps>((props, ref) => {
-  const { item, onRemoveItem, hideVisitLink = false, children, style } = props;
-  const { name, image, discountPrice, currencyCode, sku, productUrl } = item;
-
-  const classes = useStyles();
-
-  return (
-    <ListItem
-      ref={ref}
-      alignItems="flex-start"
-      classes={{
-        container: classes.listItem,
-        gutters: classes.gutters,
-      }}
-      style={style}
-    >
-      {children}
-      <ListItemAvatar classes={{ root: classes.listItemAvatar }}>
-        <Avatar
-          classes={{ root: classes.avatarRoot }}
-          alt={name}
-          src={`${image}?w=${AVATAR_SIZE}`}
-          variant="square"
-        />
-      </ListItemAvatar>
-      <ListItemText primary={name} secondary={formatCurrency(discountPrice, currencyCode)} />
-      <ListItemSecondaryAction className={classes.listItemSecondaryAction}>
-        {hideVisitLink !== true && (
-          <IconButton
-            aria-label="open in new window"
-            title="Visit the product page at PlayStation store"
-            href={productUrl}
-            target="_blank"
-          >
-            <OpenInNewIcon />
-          </IconButton>
-        )}
-        <IconButton
-          aria-label="delete"
-          title="Remove this item from your wish list"
-          data-sku={sku}
-          onClick={onRemoveItem}
-        >
-          <DeleteIcon />
-        </IconButton>
-      </ListItemSecondaryAction>
-    </ListItem>
-  );
-});
-
-WishlistListItem.displayName = 'WishlistListItem';
-
-export default WishlistListItem;

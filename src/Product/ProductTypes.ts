@@ -62,7 +62,7 @@ export type GameCTASchema = {
      * String representing a Timestamp for the Offer end date
      * e.g: `'1605945540000'`
      */
-    endTime: string;
+    endTime: string | null;
     /**
      * ISO currency code
      * e.g: `BRL` | `EUR`
@@ -77,9 +77,16 @@ export type GameCTASchema = {
 /**
  * Normalized product schema used internally by this app
  */
-export type ProductSchema = Omit<PSProductSchema, 'offers'> & {
+export type ProductSchema = Omit<PSProductSchema, 'offers' | 'description'> & {
+  /**
+   * "Original" price before discount applied
+   */
   originalPrice: number;
+  /**
+   * Final selling price
+   */
   discountPrice: number;
   currencyCode: string;
   productUrl: string;
+  discountEndTime: number | null;
 };

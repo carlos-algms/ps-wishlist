@@ -41,20 +41,22 @@ function parsePsnSchema(
   const productSchema: ProductSchema = {
     name: psProductSchema.name,
     category: psProductSchema.category,
-    description: psProductSchema.description,
     sku: psProductSchema.sku,
     image: psProductSchema.image,
     originalPrice: psProductSchema.offers.price,
     discountPrice: psProductSchema.offers.price,
     currencyCode: psProductSchema.offers.priceCurrency,
     productUrl,
+    discountEndTime: null,
   };
 
   const gameCtaSchema = getGameCtaSchema(ctaSchema);
 
   if (gameCtaSchema) {
-    productSchema.originalPrice = gameCtaSchema.price.basePriceValue / 100;
-    productSchema.discountPrice = gameCtaSchema.price.discountedValue / 100;
+    const { price } = gameCtaSchema;
+    productSchema.originalPrice = price.basePriceValue / 100;
+    productSchema.discountPrice = price.discountedValue / 100;
+    productSchema.discountEndTime = price.endTime ? parseInt(price.endTime) : null;
   }
 
   return productSchema;
