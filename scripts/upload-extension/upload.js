@@ -24,7 +24,7 @@ void (async () => {
     const { data: releaseData } = await octokit.repos.getReleaseByTag({
       owner,
       repo,
-      tag: process.env.TAG,
+      tag,
     });
 
     console.log(`Release Data: id: [${releaseData.id}], tag: [${releaseData.tag_name}]`);
