@@ -41,7 +41,7 @@ const options = {
     'no-restricted-imports': [
       'error',
       {
-        paths: ['@material-ui/core'], // Only root imports are blocked
+        paths: ['@material-ui/core', '@material-ui/lab'], // Only root imports are blocked
         patterns: ['@material-ui/*/*/*', '!@material-ui/core/test-utils/*'],
       },
     ],

@@ -1,1 +1,1 @@
-export { default } from './PopupConnector';
+export { default } from './Popup';

@@ -1,34 +1,21 @@
-import BottomNavigation from '@material-ui/core/BottomNavigation';
-import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
-import Divider from '@material-ui/core/Divider';
 import { styled } from '@material-ui/core/styles';
-import type { FC } from 'react';
+import { FC } from 'react';
 
-import WishlistIcon from '../shared/components/Icons/WishlistIcon';
-import openWishlistPage from '../shared/openWishlistPage';
-import type { WishlistItem } from '../Wishlist/psWishlistStorage';
-import WishlistList from '../Wishlist/WishlistList/WishlistList';
+import NotProductPage from './NotProductPage';
+import PopupFooter from './PopupFooter';
+import PopupProduct from './PopupProduct';
+import ProductAutoInclude from './ProductAutoInclude';
 
-export type Props = {
-  wishlistItem?: WishlistItem | null;
-};
-
-const Popup: FC<Props> = ({ wishlistItem }) => {
-  const list = wishlistItem && [wishlistItem];
-
+const Popup: FC = () => {
   return (
     <Root>
-      <BottomNavigation showLabels>
-        <BottomNavigationAction
-          label="Wishlist"
-          title="Show my Wishlist"
-          icon={<WishlistIcon />}
-          onClick={openWishlistPage}
-        />
-      </BottomNavigation>
-      <Divider />
+      <PopupProduct />
 
-      {list && <WishlistList items={list} hideVisitLink />}
+      <NotProductPage />
+
+      <PopupFooter />
+
+      <ProductAutoInclude />
     </Root>
   );
 };
@@ -36,6 +23,6 @@ const Popup: FC<Props> = ({ wishlistItem }) => {
 export default Popup;
 
 const Root = styled('main')(({ theme }) => ({
-  minWidth: 400,
-  padding: theme.spacing(1, 3),
+  minWidth: 450,
+  padding: theme.spacing(1, 2),
 }));
