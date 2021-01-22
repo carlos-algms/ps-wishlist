@@ -1,10 +1,11 @@
 import { makeStorageClient } from '../../shared/storageManager';
-import { SortBy } from './Sort';
+
+import { defaultSortBy, SortBy } from './Sort';
 
 const {
   getter: getSortByFromStorage,
   setter: saveSortByToStorage,
   onChanges: onSortByChanges,
-} = makeStorageClient<SortBy, SortBy>('SortByStore', SortBy.Default);
+} = makeStorageClient<SortBy, SortBy>('SortByStore', defaultSortBy);
 
 export { getSortByFromStorage, saveSortByToStorage, onSortByChanges };

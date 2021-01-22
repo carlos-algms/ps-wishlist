@@ -1,9 +1,11 @@
 import List from '@material-ui/core/List';
 import { FC, useCallback, useEffect, useRef, useState } from 'react';
 
+import { trackEvent } from '../../Tracking/tracking';
 import { WishlistItem } from '../psWishlistStorage';
 import { handleRemoveItem, WishlistProps } from '../WishlistList/WishlistList';
 
+import { DragItem } from './useSortableItem';
 import WishlistSortableItem from './WishlistSortableItem';
 
 export type WishlistListSortableProps = WishlistProps & {
@@ -34,9 +36,21 @@ const WishlistListSortable: FC<WishlistListSortableProps> = ({
     });
   }, []);
 
-  const handleSaveOrderedList = useCallback(() => {
-    onListOrdered(localItems);
-  }, [localItems, onListOrdered]);
+  const handleSaveOrderedList = useCallback(
+    (dragItem: DragItem) => {
+      const item = localItems[dragItem.index];
+
+      trackEvent({
+        category: 'Sorting',
+        action: 'Ranked',
+        label: item.name,
+        value: dragItem.index,
+      });
+
+      onListOrdered(localItems);
+    },
+    [localItems, onListOrdered],
+  );
 
   return (
     <List ref={listRef}>

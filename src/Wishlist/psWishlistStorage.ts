@@ -1,4 +1,5 @@
 import { ProductSchema } from '../Product/ProductTypes';
+import { trackEvent } from '../Tracking/tracking';
 
 export type WishlistItem = ProductSchema & {
   includedAt: number;
@@ -86,6 +87,14 @@ export async function includeProductToWishListStorage(product: ProductSchema): P
     const updatedWishlist = [...wishlist, newItem];
 
     await saveWishlistToStorage(updatedWishlist);
+
+    trackEvent({
+      category: 'Wishlist',
+      action: 'Added',
+      label: newItem.name,
+      value: newItem.discountPrice * 100, // GA does not accept decimals
+    });
+
     return true;
   }
 
@@ -97,10 +106,23 @@ export async function includeProductToWishListStorage(product: ProductSchema): P
  */
 export async function removeProductFromWishListStorage(sku: string): Promise<boolean> {
   const wishlist = await getWishlistFromStorage();
+  const itemToRemove = wishlist.find((item) => item.sku === sku);
+
+  if (!itemToRemove) {
+    return false;
+  }
+
   const updatedList = wishlist.filter((item) => item.sku !== sku);
   await saveWishlistToStorage(updatedList);
 
-  return wishlist.length !== updatedList.length;
+  trackEvent({
+    category: 'Wishlist',
+    action: 'Removed',
+    label: itemToRemove.name,
+    value: itemToRemove.discountPrice * 100, // GA does not accept decimals
+  });
+
+  return true;
 }
 
 const isAlreadyIncluded = (newItem: WishlistItem, wishlist: WishlistItem[]) =>

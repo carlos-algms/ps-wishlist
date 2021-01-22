@@ -6,8 +6,9 @@ export enum SortBy {
   PriceLower,
   PriceHigher,
   UserDefined,
-  Default = DateAddedDesc,
 }
+
+export const defaultSortBy = SortBy.DateAddedDesc;
 
 export const sortMethods: Record<SortBy, (list: WishlistItem[]) => WishlistItem[]> = {
   [SortBy.DateAddedAsc]: (list) => list.concat().sort((a, b) => a.includedAt - b.includedAt),
@@ -19,6 +20,6 @@ export const sortMethods: Record<SortBy, (list: WishlistItem[]) => WishlistItem[
 };
 
 export function sortWishlistBy(list: WishlistItem[], by: SortBy): WishlistItem[] {
-  const sortMethod = sortMethods[by] || sortMethods[SortBy.Default];
+  const sortMethod = sortMethods[by] || sortMethods[defaultSortBy];
   return sortMethod(list);
 }

@@ -9,6 +9,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import { CSSProperties, forwardRef, MouseEventHandler, ReactNode } from 'react';
 
+import { trackStoreLink } from '../../Tracking/tracking';
 import type { WishlistItem } from '../psWishlistStorage';
 
 import MetaData from './MetaData';
@@ -76,6 +77,8 @@ const WishlistListItem = forwardRef<HTMLLIElement | null, WishlistListItemProps>
             title="Visit the product page at PlayStation store"
             href={productUrl}
             target="_blank"
+            rel="noreferrer noopener"
+            onClick={() => trackStoreLink(productUrl)}
           >
             <OpenInNewIcon />
           </IconButton>

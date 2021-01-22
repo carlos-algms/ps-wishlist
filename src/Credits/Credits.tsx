@@ -3,6 +3,8 @@ import { styled } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import type { FC } from 'react';
 
+import ExternalLink from '../shared/components/ExternalLink';
+
 const Credits: FC = () => {
   return (
     <div>
@@ -15,13 +17,13 @@ const Credits: FC = () => {
           <img src="images/icons/wishlist-24.png" alt="main icon" />
           <div>
             Main Icon made by{' '}
-            <a href="https://www.flaticon.com/authors/dinosoftlabs" title="DinosoftLabs">
+            <ExternalLink href="https://www.flaticon.com/authors/dinosoftlabs" title="DinosoftLabs">
               DinosoftLabs
-            </a>{' '}
+            </ExternalLink>{' '}
             from{' '}
-            <a href="https://www.flaticon.com/" title="Flaticon">
+            <ExternalLink href="https://www.flaticon.com/" title="Flaticon">
               www.flaticon.com
-            </a>
+            </ExternalLink>
           </div>
         </VerticalAlign>
       </Box>

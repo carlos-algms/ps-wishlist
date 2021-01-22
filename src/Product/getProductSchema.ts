@@ -1,5 +1,6 @@
 import executeScriptOnCurrentTab from '../shared/executeScriptOnCurrentTab';
 import htmlToElement from '../shared/htmlToElement';
+import { trackException } from '../Tracking/tracking';
 
 import { CTASchema, GameCTASchema, ProductSchema, PSProductSchema } from './ProductTypes';
 
@@ -63,26 +64,34 @@ function parsePsnSchema(
 }
 
 async function getJsonFromCurrentTab<T>(querySelector: string): Promise<T | null> {
-  const script = `document.querySelector('${querySelector}').innerText`;
-  const result = await executeScriptOnCurrentTab<string>(script);
+  try {
+    const script = `document.querySelector('${querySelector}').innerText`;
+    const result = await executeScriptOnCurrentTab<string>(script);
 
-  if (!result) {
-    // TODO handle failing get schema
-    return null;
+    if (result) {
+      return JSON.parse(result) as T;
+    }
+  } catch (error) {
+    console.error(error);
+    trackException(error, 'Error Getting JSON from current tab');
   }
 
-  return JSON.parse(result) as T;
+  return null;
 }
 
 function getJsonFromHtml<T>(doc: DocumentFragment, querySelector: string): T | null {
-  const result = doc.querySelector<HTMLElement>(querySelector)?.innerText;
+  try {
+    const result = doc.querySelector<HTMLElement>(querySelector)?.innerText;
 
-  if (!result) {
-    // TODO handle failing get schema
-    return null;
+    if (result) {
+      return JSON.parse(result) as T;
+    }
+  } catch (error) {
+    console.error(error);
+    trackException(error, 'Error Getting JSON from HTML');
   }
 
-  return JSON.parse(result) as T;
+  return null;
 }
 
 function getGameCtaSchema(ctaSchema: CTASchema): null | GameCTASchema {

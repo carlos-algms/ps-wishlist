@@ -17,6 +17,7 @@ export async function refreshProductsData(): Promise<void> {
         updateItem(item, productSchema);
       }
     } catch (error) {
+      // TODO track this error, check if AnalyticsJS works in the background script
       console.error(error);
     }
   }

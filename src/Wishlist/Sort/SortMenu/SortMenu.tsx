@@ -6,6 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { FC } from 'react';
 
+import { trackEvent } from '../../../Tracking/tracking';
 import { SortBy } from '../Sort';
 import { saveSortByToStorage } from '../sortByStorageClient';
 import useSortByValue from '../useSortByValue';
@@ -61,4 +62,9 @@ export default SortMenu;
 const handleChange: RadioGroupProps['onChange'] = (_e, value) => {
   const sortBy = parseInt(value);
   void saveSortByToStorage(sortBy);
+  trackEvent({
+    category: 'Sorting',
+    action: 'Changed',
+    label: SortBy[sortBy],
+  });
 };

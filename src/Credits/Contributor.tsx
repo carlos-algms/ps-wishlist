@@ -4,6 +4,9 @@ import CardHeader from '@material-ui/core/CardHeader';
 import { styled } from '@material-ui/core/styles';
 import type { FC } from 'react';
 
+import ExternalLink from '../shared/components/ExternalLink';
+import { trackExternalLink } from '../Tracking/tracking';
+
 type ContributorProps = {
   userName: string;
   displayName: string;
@@ -20,16 +23,13 @@ const Contributor: FC<ContributorProps> = ({ userName, displayName }) => {
             component="a"
             href={url}
             target="_blank"
-            rel="noreferrer"
+            rel="noreferrer noopener"
             alt={`${userName} picture`}
             src={`${url}.png?size=60`}
+            onClick={() => trackExternalLink(url)}
           />
         }
-        title={
-          <a href={url} target="_blank" rel="noreferrer">
-            {displayName}
-          </a>
-        }
+        title={<ExternalLink href={url}>{displayName}</ExternalLink>}
       />
     </CardStyled>
   );
