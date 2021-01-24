@@ -56,7 +56,7 @@ const webpackFactory = (envFlags, argv) => {
         chunks: ['options'],
       }),
       new CopyPlugin({
-        patterns: [{ from: 'manifest.json' }, { from: 'images/', to: 'images/' }],
+        patterns: [{ from: 'manifest.json' }, { from: 'images/icons', to: 'images/icons' }],
       }),
       isAnalyseMode &&
         new BundleAnalyzerPlugin({
