@@ -1,6 +1,9 @@
 import { styled } from '@material-ui/core/styles';
+import Alert from '@material-ui/lab/Alert';
+import AlertTitle from '@material-ui/lab/AlertTitle';
 import { FC } from 'react';
 
+import { GameAvailability } from '../../Product/ProductTypes';
 import { formatCurrency } from '../../shared/formatCurrency';
 import { formatShortDateWithTime } from '../../shared/formatDate';
 
@@ -9,9 +12,26 @@ type MetaDataProps = {
   originalPrice: number;
   currencyCode: string;
   discountEndTime: number | null;
+  availability: GameAvailability;
 };
 
-const MetaData: FC<MetaDataProps> = ({ price, originalPrice, currencyCode, discountEndTime }) => {
+const MetaData: FC<MetaDataProps> = ({
+  price,
+  originalPrice,
+  currencyCode,
+  discountEndTime,
+  availability,
+}) => {
+  if (availability === GameAvailability.Unavailable) {
+    return (
+      <Container>
+        <Alert severity="error">
+          <AlertTitle>Currently unavailable</AlertTitle>
+        </Alert>
+      </Container>
+    );
+  }
+
   return (
     <Container>
       {(originalPrice && originalPrice > price && (

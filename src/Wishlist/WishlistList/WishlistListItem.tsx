@@ -37,6 +37,7 @@ const WishlistListItem = forwardRef<HTMLLIElement | null, WishlistListItemProps>
     sku,
     productUrl,
     discountEndTime,
+    availability,
   } = item;
 
   const classes = useStyles();
@@ -78,6 +79,7 @@ const WishlistListItem = forwardRef<HTMLLIElement | null, WishlistListItemProps>
           />
         </ListItemAvatar>
         <ListItemText
+          className={classes.listItemText}
           primary={name}
           secondaryTypographyProps={secondaryTypographyProps}
           secondary={
@@ -86,6 +88,7 @@ const WishlistListItem = forwardRef<HTMLLIElement | null, WishlistListItemProps>
               originalPrice={originalPrice}
               currencyCode={currencyCode}
               discountEndTime={discountEndTime}
+              availability={availability}
             />
           }
         />
@@ -146,12 +149,15 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'stretch',
   },
 
+  listItemText: {
+    padding: `0 ${theme.spacing(2)}px`,
+  },
+
   listItemSecondaryAction: {
     visibility: 'hidden',
   },
 
   listItemAvatar: {
-    marginRight: `${theme.spacing(2)}px`,
     marginTop: 0,
   },
 

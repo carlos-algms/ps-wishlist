@@ -30,4 +30,5 @@ function updateItem(item: WishlistItem, productSchema: ProductSchema) {
   item.discountPrice = productSchema.discountPrice;
   item.originalPrice = productSchema.originalPrice;
   item.discountEndTime = productSchema.discountEndTime;
+  item.availability = productSchema.availability;
 }

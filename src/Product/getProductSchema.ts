@@ -3,7 +3,13 @@ import { DEFAULT_CURRENCY_CODE } from '../shared/formatCurrency';
 import htmlToElement from '../shared/htmlToElement';
 import { trackException } from '../Tracking/tracking';
 
-import { CTASchema, GameCTASchema, ProductSchema, PSProductSchema } from './ProductTypes';
+import {
+  CTASchema,
+  GameAvailability,
+  GameCTASchema,
+  ProductSchema,
+  PSProductSchema,
+} from './ProductTypes';
 
 const PRODUCT_SELECTOR = '#mfe-jsonld-tags';
 const CTA_SELECTOR = `.cta-title-container .pdp-cta script`;
@@ -50,16 +56,22 @@ function parsePsnSchema(
     currencyCode: psProductSchema.offers.priceCurrency || DEFAULT_CURRENCY_CODE,
     productUrl,
     discountEndTime: null,
+    availability: GameAvailability.Available,
   };
 
   const gameCtaSchema = getGameCtaSchema(ctaSchema);
 
   if (gameCtaSchema) {
     const { price } = gameCtaSchema;
-    productSchema.originalPrice = price.basePriceValue / 100;
-    productSchema.discountPrice = price.discountedValue / 100;
+
+    if (price.basePriceValue && price.discountedValue) {
+      productSchema.originalPrice = price.basePriceValue / 100;
+      productSchema.discountPrice = price.discountedValue / 100;
+    }
+
     productSchema.discountEndTime = price.endTime ? parseInt(price.endTime) : null;
     productSchema.currencyCode = price.currencyCode || DEFAULT_CURRENCY_CODE;
+    productSchema.availability = gameCtaSchema.type;
   }
 
   return productSchema;

@@ -25,39 +25,45 @@ export type CTASchema = {
   };
 };
 
+export enum GameAvailability {
+  Available = 'ADD_TO_CART',
+  Unavailable = 'UNAVAILABLE',
+}
+
 /**
  * Specific data for the game extracted from the CTASchema
  * It contains much more props, listing here only the important ones
  */
 export type GameCTASchema = {
   __typename: 'GameCTA';
+  type: GameAvailability;
   price: {
     __typename: 'Price';
     /**
      * Original price of the product without decimal places
      * Divide it by 100 to get actual price
      */
-    basePriceValue: number;
+    basePriceValue: number | null;
     /**
      * Localized Original price, before the discount
      * e.g: `R$ 124,90` or `Free`
      */
-    basePrice: string;
+    basePrice: string | null;
     /**
      * Discount price without decimal places
      * Divide it by 100 to get actual price
      */
-    discountedValue: number;
+    discountedValue: number | null;
     /**
      * Localized discount price
      * e.g: `R$ 81,18`
      */
-    discountedPrice: string;
+    discountedPrice: string | null;
     /**
      * Text containing how much the user will save in percentage
      * e.g: `-35%`
      */
-    discountText: string;
+    discountText: string | null;
     /**
      * String representing a Timestamp for the Offer end date
      * e.g: `'1605945540000'`
@@ -67,10 +73,10 @@ export type GameCTASchema = {
      * ISO currency code
      * e.g: `BRL` | `EUR`
      */
-    currencyCode: string;
+    currencyCode: string | null;
     isFree: boolean;
-    isExclusive: boolean;
-    isTiedToSubscription: boolean;
+    isExclusive: boolean | null;
+    isTiedToSubscription: boolean | null;
   };
 };
 
@@ -89,4 +95,5 @@ export type ProductSchema = Omit<PSProductSchema, 'offers' | 'description'> & {
   currencyCode: string;
   productUrl: string;
   discountEndTime: number | null;
+  availability: GameAvailability;
 };
