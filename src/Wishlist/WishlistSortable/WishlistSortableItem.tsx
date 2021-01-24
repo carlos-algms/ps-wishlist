@@ -27,7 +27,7 @@ const WishlistSortableItem: FC<WishlistSortableItemProps> = (props) => {
   });
 
   return (
-    <WishlistListItem {...restProps} ref={itemNodeRef} style={{ opacity }}>
+    <WishlistListItem {...restProps} index={index} ref={itemNodeRef} style={{ opacity }}>
       {showDragHandler && (
         <ListItemIconStyled ref={handlerNodeRef}>
           <SortDragHandler />

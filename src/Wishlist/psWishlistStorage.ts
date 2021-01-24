@@ -81,18 +81,22 @@ export function productToWishListItem(product: ProductSchema): WishlistItem {
  */
 export async function includeProductToWishListStorage(product: ProductSchema): Promise<boolean> {
   const newItem = productToWishListItem(product);
+  return includeItemToWishlistStorage(newItem);
+}
+
+export async function includeItemToWishlistStorage(item: WishlistItem): Promise<boolean> {
   const wishlist = await getWishlistFromStorage();
 
-  if (!isAlreadyIncluded(newItem, wishlist)) {
-    const updatedWishlist = [...wishlist, newItem];
+  if (!isAlreadyIncluded(item, wishlist)) {
+    const updatedWishlist = [...wishlist, item];
 
     await saveWishlistToStorage(updatedWishlist);
 
     trackEvent({
       category: 'Wishlist',
       action: 'Added',
-      label: newItem.name,
-      value: newItem.discountPrice * 100, // GA does not accept decimals
+      label: item.name,
+      value: item.discountPrice * 100, // GA does not accept decimals
     });
 
     return true;

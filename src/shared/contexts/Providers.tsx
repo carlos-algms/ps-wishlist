@@ -1,3 +1,4 @@
+import { SnackbarProvider } from 'notistack';
 import type { FC } from 'react';
 
 import GTagScriptLoader from '../../Tracking/GTagScriptLoader';
@@ -14,7 +15,11 @@ const Providers: FC = ({ children }) => {
     <>
       <AppThemeProvider>
         <PSCurrentPageContextProvider>
-          <PSWishlistContextProvider>{children}</PSWishlistContextProvider>
+          <PSWishlistContextProvider>
+            <SnackbarProvider maxSnack={3} autoHideDuration={15000}>
+              {children}
+            </SnackbarProvider>
+          </PSWishlistContextProvider>
         </PSCurrentPageContextProvider>
       </AppThemeProvider>
 

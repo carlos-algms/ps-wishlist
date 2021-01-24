@@ -1,9 +1,9 @@
-import List from '@material-ui/core/List';
 import { FC, useCallback, useEffect, useRef, useState } from 'react';
 
 import { trackEvent } from '../../Tracking/tracking';
+import useRemoveWithUndo from '../hooks/useRemoveWithUndo';
 import { WishlistItem } from '../psWishlistStorage';
-import { handleRemoveItem, WishlistProps } from '../WishlistList/WishlistList';
+import { ListStyled, WishlistProps } from '../WishlistList/WishlistList';
 
 import { DragItem } from './useSortableItem';
 import WishlistSortableItem from './WishlistSortableItem';
@@ -52,8 +52,10 @@ const WishlistListSortable: FC<WishlistListSortableProps> = ({
     [localItems, onListOrdered],
   );
 
+  const handleRemoveItem = useRemoveWithUndo();
+
   return (
-    <List ref={listRef}>
+    <ListStyled ref={listRef}>
       {localItems.map((item, i) => (
         <WishlistSortableItem
           key={item.sku}
@@ -66,7 +68,7 @@ const WishlistListSortable: FC<WishlistListSortableProps> = ({
           showDragHandler={showDragHandler}
         />
       ))}
-    </List>
+    </ListStyled>
   );
 };
 

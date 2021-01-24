@@ -1,7 +1,9 @@
 import List from '@material-ui/core/List';
-import type { FC, MouseEventHandler } from 'react';
+import { styled } from '@material-ui/core/styles';
+import type { FC } from 'react';
 
-import { removeProductFromWishListStorage, WishlistItem } from '../psWishlistStorage';
+import useRemoveWithUndo from '../hooks/useRemoveWithUndo';
+import { WishlistItem } from '../psWishlistStorage';
 
 import WishlistListItem from './WishlistListItem';
 
@@ -10,17 +12,11 @@ export type WishlistProps = {
   hideVisitLink?: boolean;
 };
 
-export const handleRemoveItem: MouseEventHandler<HTMLButtonElement> = (event) => {
-  const sku = event.currentTarget.dataset.sku;
-
-  if (sku) {
-    void removeProductFromWishListStorage(sku);
-  }
-};
-
 const WishlistList: FC<WishlistProps> = ({ items, hideVisitLink }) => {
+  const handleRemoveItem = useRemoveWithUndo();
+
   return (
-    <List>
+    <ListStyled>
       {items.map((item) => (
         <WishlistListItem
           key={item.sku}
@@ -29,8 +25,13 @@ const WishlistList: FC<WishlistProps> = ({ items, hideVisitLink }) => {
           hideVisitLink={hideVisitLink}
         />
       ))}
-    </List>
+    </ListStyled>
   );
 };
 
 export default WishlistList;
+
+export const ListStyled = styled(List)({
+  overflow: 'hidden',
+  padding: '0 4px',
+});

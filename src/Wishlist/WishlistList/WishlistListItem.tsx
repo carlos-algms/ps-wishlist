@@ -4,10 +4,11 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
+import Slide from '@material-ui/core/Slide';
 import { makeStyles } from '@material-ui/core/styles';
 import DeleteIcon from '@material-ui/icons/Delete';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
-import { CSSProperties, forwardRef, MouseEventHandler, ReactNode } from 'react';
+import { CSSProperties, forwardRef, MouseEventHandler, ReactNode, useState } from 'react';
 
 import { trackStoreLink } from '../../Tracking/tracking';
 import type { WishlistItem } from '../psWishlistStorage';
@@ -16,16 +17,17 @@ import MetaData from './MetaData';
 
 export type WishlistListItemProps = {
   item: WishlistItem;
-  onRemoveItem: MouseEventHandler<HTMLButtonElement>;
+  onRemoveItem: (item: WishlistItem) => unknown;
   hideVisitLink?: boolean;
   children?: ReactNode;
   style?: CSSProperties;
+  index?: number;
 };
 
 const secondaryTypographyProps: { component: 'div' } = { component: 'div' };
 
 const WishlistListItem = forwardRef<HTMLLIElement | null, WishlistListItemProps>((props, ref) => {
-  const { item, onRemoveItem, hideVisitLink = false, children, style } = props;
+  const { item, onRemoveItem, hideVisitLink = false, children, style, index = 0 } = props;
   const {
     name,
     image,
@@ -39,60 +41,78 @@ const WishlistListItem = forwardRef<HTMLLIElement | null, WishlistListItemProps>
 
   const classes = useStyles();
 
+  const [isVisible, setIsVisible] = useState(true);
+
+  const handleRemoveClick: MouseEventHandler<HTMLButtonElement> = () => {
+    setIsVisible(false);
+  };
+
+  const removeAfterAnimation = () => {
+    onRemoveItem(item);
+  };
+
   return (
-    <ListItem
-      ref={ref}
-      classes={{
-        root: classes.listItemRoot,
-        container: classes.listItem,
-        gutters: classes.gutters,
-      }}
-      style={style}
+    <Slide
+      direction="right"
+      in={isVisible}
+      onExited={removeAfterAnimation}
+      timeout={300 + index * 150}
+      unmountOnExit
     >
-      {children}
-      <ListItemAvatar classes={{ root: classes.listItemAvatar }}>
-        <Avatar
-          classes={{ root: classes.avatarRoot }}
-          alt={name}
-          src={`${image}?w=${AVATAR_SIZE}`}
-          variant="square"
-        />
-      </ListItemAvatar>
-      <ListItemText
-        primary={name}
-        secondaryTypographyProps={secondaryTypographyProps}
-        secondary={
-          <MetaData
-            price={discountPrice}
-            originalPrice={originalPrice}
-            currencyCode={currencyCode}
-            discountEndTime={discountEndTime}
+      <ListItem
+        ref={ref}
+        classes={{
+          container: classes.listItemContainer,
+          root: classes.listItemRoot,
+          gutters: classes.gutters,
+        }}
+        style={style}
+      >
+        {children}
+        <ListItemAvatar classes={{ root: classes.listItemAvatar }}>
+          <Avatar
+            classes={{ root: classes.avatarRoot }}
+            alt={name}
+            src={`${image}?w=${AVATAR_SIZE}`}
+            variant="square"
           />
-        }
-      />
-      <ListItemSecondaryAction className={classes.listItemSecondaryAction}>
-        {hideVisitLink !== true && (
+        </ListItemAvatar>
+        <ListItemText
+          primary={name}
+          secondaryTypographyProps={secondaryTypographyProps}
+          secondary={
+            <MetaData
+              price={discountPrice}
+              originalPrice={originalPrice}
+              currencyCode={currencyCode}
+              discountEndTime={discountEndTime}
+            />
+          }
+        />
+        <ListItemSecondaryAction className={classes.listItemSecondaryAction}>
+          {hideVisitLink !== true && (
+            <IconButton
+              aria-label="open in new window"
+              title="Visit the product page at PlayStation store"
+              href={productUrl}
+              target="_blank"
+              rel="noreferrer noopener"
+              onClick={() => trackStoreLink(productUrl)}
+            >
+              <OpenInNewIcon />
+            </IconButton>
+          )}
           <IconButton
-            aria-label="open in new window"
-            title="Visit the product page at PlayStation store"
-            href={productUrl}
-            target="_blank"
-            rel="noreferrer noopener"
-            onClick={() => trackStoreLink(productUrl)}
+            aria-label="delete"
+            title="Remove this item from your wish list"
+            data-sku={sku}
+            onClick={handleRemoveClick}
           >
-            <OpenInNewIcon />
+            <DeleteIcon />
           </IconButton>
-        )}
-        <IconButton
-          aria-label="delete"
-          title="Remove this item from your wish list"
-          data-sku={sku}
-          onClick={onRemoveItem}
-        >
-          <DeleteIcon />
-        </IconButton>
-      </ListItemSecondaryAction>
-    </ListItem>
+        </ListItemSecondaryAction>
+      </ListItem>
+    </Slide>
   );
 });
 
@@ -108,11 +128,7 @@ const useStyles = makeStyles((theme) => ({
     padding: 0,
   },
 
-  listItemRoot: {
-    alignItems: 'stretch',
-  },
-
-  listItem: {
+  listItemContainer: {
     background: theme.palette.background.paper,
     marginBottom: theme.spacing(2),
     boxShadow: theme.shadows[1],
@@ -124,6 +140,10 @@ const useStyles = makeStyles((theme) => ({
     '&:hover $listItemSecondaryAction': {
       visibility: 'inherit',
     },
+  },
+
+  listItemRoot: {
+    alignItems: 'stretch',
   },
 
   listItemSecondaryAction: {
