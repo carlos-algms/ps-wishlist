@@ -35,13 +35,17 @@ jobs:
 
       - run: yarn build
 
-      - run: yarn run pack
+      - name: Zip extension
+        run: |
+          cd "$GITHUB_WORKSPACE/scripts/zip-extension"
+          yarn install --frozen-lockfile
+          node ./zip-extension.js
 
       - name: upload zip to tag
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAG: ${{ github.ref }}
         run: |
-          cd scripts/upload-extension
+          cd "$GITHUB_WORKSPACE/scripts/upload-extension"
           yarn install --frozen-lockfile
-          node ./upload
+          node ./upload.js

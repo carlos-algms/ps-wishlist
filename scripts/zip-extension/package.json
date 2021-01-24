@@ -1,0 +1,12 @@
+{
+  "name": "zip-extension",
+  "version": "1.0.0",
+  "main": "zip-extension.js",
+  "license": "MIT",
+  "dependencies": {
+    "@types/archiver": "^5.1.0",
+    "archiver": "^5.1.0",
+    "pretty-bytes": "^5.5.0"
+  },
+  "private": true
+}

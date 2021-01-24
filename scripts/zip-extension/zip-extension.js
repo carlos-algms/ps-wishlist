@@ -3,8 +3,8 @@ const archiver = require('archiver');
 const fs = require('fs');
 const prettyBytes = require('pretty-bytes');
 
-const buildExtensionFileName = require('./shared/buildExtensionFileName');
-const pathFromRoot = require('./shared/pathFromRoot');
+const buildExtensionFileName = require('../shared/buildExtensionFileName');
+const pathFromRoot = require('../shared/pathFromRoot');
 
 const outFileName = buildExtensionFileName();
 
