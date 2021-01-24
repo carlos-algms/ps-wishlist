@@ -57,6 +57,9 @@ function parsePsnSchema(
     productUrl,
     discountEndTime: null,
     availability: GameAvailability.Available,
+    isFree: false,
+    localOriginalPrice: '',
+    localDiscountPrice: '',
   };
 
   const gameCtaSchema = getGameCtaSchema(ctaSchema);
@@ -69,9 +72,12 @@ function parsePsnSchema(
       productSchema.discountPrice = price.discountedValue / 100;
     }
 
+    productSchema.localOriginalPrice = price.basePrice || '';
+    productSchema.localDiscountPrice = price.discountedPrice || '';
     productSchema.discountEndTime = price.endTime ? parseInt(price.endTime) : null;
     productSchema.currencyCode = price.currencyCode || DEFAULT_CURRENCY_CODE;
     productSchema.availability = gameCtaSchema.type;
+    productSchema.isFree = price.isFree;
   }
 
   return productSchema;

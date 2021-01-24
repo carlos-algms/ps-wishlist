@@ -28,6 +28,7 @@ export type CTASchema = {
 export enum GameAvailability {
   Available = 'ADD_TO_CART',
   Unavailable = 'UNAVAILABLE',
+  Download = 'DOWNLOAD',
 }
 
 /**
@@ -92,8 +93,14 @@ export type ProductSchema = Omit<PSProductSchema, 'offers' | 'description'> & {
    * Final selling price
    */
   discountPrice: number;
+
+  localOriginalPrice: string;
+
+  localDiscountPrice: string;
+
   currencyCode: string;
   productUrl: string;
   discountEndTime: number | null;
   availability: GameAvailability;
+  isFree: boolean;
 };

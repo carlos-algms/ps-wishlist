@@ -6,22 +6,23 @@ import { FC } from 'react';
 import { GameAvailability } from '../../Product/ProductTypes';
 import { formatCurrency } from '../../shared/formatCurrency';
 import { formatShortDateWithTime } from '../../shared/formatDate';
+import { WishlistItem } from '../psWishlistStorage';
 
 type MetaDataProps = {
-  price: number;
-  originalPrice: number;
-  currencyCode: string;
-  discountEndTime: number | null;
-  availability: GameAvailability;
+  item: WishlistItem;
 };
 
-const MetaData: FC<MetaDataProps> = ({
-  price,
-  originalPrice,
-  currencyCode,
-  discountEndTime,
-  availability,
-}) => {
+const MetaData: FC<MetaDataProps> = ({ item }) => {
+  const {
+    discountPrice,
+    originalPrice,
+    currencyCode,
+    discountEndTime,
+    availability,
+    isFree,
+    localDiscountPrice,
+  } = item;
+
   if (availability === GameAvailability.Unavailable) {
     return (
       <Container>
@@ -32,13 +33,21 @@ const MetaData: FC<MetaDataProps> = ({
     );
   }
 
+  if (isFree) {
+    return (
+      <Container>
+        <Price>{localDiscountPrice}</Price>
+      </Container>
+    );
+  }
+
   return (
     <Container>
-      {(originalPrice && originalPrice > price && (
+      {(originalPrice && originalPrice > discountPrice && (
         <BasePrice>{formatCurrency(originalPrice, currencyCode)}</BasePrice>
       )) ||
         null}
-      <Price>{formatCurrency(price, currencyCode)}</Price>
+      <Price>{formatCurrency(discountPrice, currencyCode)}</Price>
       {discountEndTime && (
         <DiscountDate>
           Discount valid until: {formatShortDateWithTime(discountEndTime)}

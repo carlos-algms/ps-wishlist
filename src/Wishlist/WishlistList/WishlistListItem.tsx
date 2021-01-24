@@ -28,17 +28,7 @@ const secondaryTypographyProps: { component: 'div' } = { component: 'div' };
 
 const WishlistListItem = forwardRef<HTMLLIElement | null, WishlistListItemProps>((props, ref) => {
   const { item, onRemoveItem, hideVisitLink = false, children, style, index = 0 } = props;
-  const {
-    name,
-    image,
-    discountPrice,
-    originalPrice,
-    currencyCode,
-    sku,
-    productUrl,
-    discountEndTime,
-    availability,
-  } = item;
+  const { name, image, sku, productUrl } = item;
 
   const classes = useStyles();
 
@@ -82,15 +72,7 @@ const WishlistListItem = forwardRef<HTMLLIElement | null, WishlistListItemProps>
           className={classes.listItemText}
           primary={name}
           secondaryTypographyProps={secondaryTypographyProps}
-          secondary={
-            <MetaData
-              price={discountPrice}
-              originalPrice={originalPrice}
-              currencyCode={currencyCode}
-              discountEndTime={discountEndTime}
-              availability={availability}
-            />
-          }
+          secondary={<MetaData item={item} />}
         />
         <ListItemSecondaryAction className={classes.listItemSecondaryAction}>
           {hideVisitLink !== true && (

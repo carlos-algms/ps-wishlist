@@ -31,4 +31,7 @@ function updateItem(item: WishlistItem, productSchema: ProductSchema) {
   item.originalPrice = productSchema.originalPrice;
   item.discountEndTime = productSchema.discountEndTime;
   item.availability = productSchema.availability;
+  item.isFree = productSchema.isFree;
+  item.localDiscountPrice = productSchema.localDiscountPrice;
+  item.localOriginalPrice = productSchema.localOriginalPrice;
 }
