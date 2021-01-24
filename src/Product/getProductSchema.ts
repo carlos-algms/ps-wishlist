@@ -1,4 +1,5 @@
 import executeScriptOnCurrentTab from '../shared/executeScriptOnCurrentTab';
+import { DEFAULT_CURRENCY_CODE } from '../shared/formatCurrency';
 import htmlToElement from '../shared/htmlToElement';
 import { trackException } from '../Tracking/tracking';
 
@@ -44,9 +45,9 @@ function parsePsnSchema(
     category: psProductSchema.category,
     sku: psProductSchema.sku,
     image: psProductSchema.image,
-    originalPrice: psProductSchema.offers.price,
-    discountPrice: psProductSchema.offers.price,
-    currencyCode: psProductSchema.offers.priceCurrency,
+    originalPrice: psProductSchema.offers.price || 0,
+    discountPrice: psProductSchema.offers.price || 0,
+    currencyCode: psProductSchema.offers.priceCurrency || DEFAULT_CURRENCY_CODE,
     productUrl,
     discountEndTime: null,
   };
@@ -58,6 +59,7 @@ function parsePsnSchema(
     productSchema.originalPrice = price.basePriceValue / 100;
     productSchema.discountPrice = price.discountedValue / 100;
     productSchema.discountEndTime = price.endTime ? parseInt(price.endTime) : null;
+    productSchema.currencyCode = price.currencyCode || DEFAULT_CURRENCY_CODE;
   }
 
   return productSchema;

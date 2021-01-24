@@ -14,9 +14,10 @@ type MetaDataProps = {
 const MetaData: FC<MetaDataProps> = ({ price, originalPrice, currencyCode, discountEndTime }) => {
   return (
     <Container>
-      {originalPrice && originalPrice > price && (
+      {(originalPrice && originalPrice > price && (
         <BasePrice>{formatCurrency(originalPrice, currencyCode)}</BasePrice>
-      )}
+      )) ||
+        null}
       <Price>{formatCurrency(price, currencyCode)}</Price>
       {discountEndTime && (
         <DiscountDate>

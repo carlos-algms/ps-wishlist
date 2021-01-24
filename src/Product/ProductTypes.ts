@@ -8,8 +8,8 @@ export type PSProductSchema = {
   sku: string;
   image: string;
   offers: {
-    price: number;
-    priceCurrency: string;
+    price?: number;
+    priceCurrency?: string;
   };
 };
 
@@ -40,7 +40,7 @@ export type GameCTASchema = {
     basePriceValue: number;
     /**
      * Localized Original price, before the discount
-     * e.g: `R$ 124,90`
+     * e.g: `R$ 124,90` or `Free`
      */
     basePrice: string;
     /**
