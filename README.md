@@ -12,9 +12,9 @@ Sony removed the feature from PlayStation website and there is no official alter
 - Drag-and-Drop your own sort order
 - Keep your list updated by periodically check for price changes in the background
 
-![wishlist](images/screenshots/wishlist-with-sorting.png)
+![wishlist](images/screenshots/wishlist-with-sorting-v1.3.0.jpg)
 
-![toolbar](images/screenshots/toolbar-icon-clicked.png)
+![toolbar](images/screenshots/toolbar-icon-clicked-v1.3.0.jpg)
 
 ## Planed
 
