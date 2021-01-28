@@ -1,5 +1,7 @@
 {
   "name": "PS Wishlist",
+  "appDesc": "Browse extension to manage your Playstation wishlist",
+  "description": "Browse extension to manage your Playstation wishlist.",
   "version": "1.3.0",
   "icons": {
     "16": "images/icons/wishlist-16.png",
